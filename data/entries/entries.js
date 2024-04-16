@@ -8,6 +8,7 @@ const entryDataFunctions = {
     async createEntry(
         userId, 
         emotionId,
+        energyId,
         activities,
         socials,
         notes) {
@@ -15,8 +16,18 @@ const entryDataFunctions = {
         // validations
         userId = validation.checkId(userId, "userId");
         emotionId = validation.checkId(emotionId, "emotionId");
+        energyId = validation.checkId(energyId, "energyId");
+
         activities = validation.checkArray(activities, "activities");
+        for (let i = 0; i < activities.length; i++) {
+            activities[i] = validation.checkId(activities[i], `Activity: ${activities[i]}`);
+        }
+
         socials = validation.checkArray(socials, "socials");
+        for (let i = 0; i < socials.length; i++) {
+            socials[i] = validation.checkId(socials[i], `Socials: ${socials[i]}`);
+        }
+    
         notes = validation.checkString(notes, "notes");
 
         // check for an existing entry today
@@ -40,21 +51,21 @@ const entryDataFunctions = {
             _id: entryId,
             userId,
             emotionId,
+            energyId,
             activities,
             socials,
             notes,
             date: currentDate
-        }
+        };
 
         const entryCollection = await entries();
         const insertResult = await entryCollection.insertOne(newEntry);
 
         if (!insertResult.insertedId) throw 'Insert failed!'
-        
-        return entryId; 
+        return await this.getEntryById(insertResult.insertedId.toString()); 
     },
 
-    ///////////// RETREIVE
+    ///////////// RETRIEVE
     async getAllEntries() {
         const entryCollection = await entries();
         return await entryCollection.find().toArray();
@@ -125,33 +136,39 @@ const entryDataFunctions = {
 
         // check fields to update
         let entryUpdate = {};
-        if (updateObject.emotionId) {
+        if ('emotionId' in updateObject) {
             entryUpdate.emotionId = new ObjectId(validation.checkId(updateObject.emotionId, "emotionId"));
         }  
-        if (updateObject.activities) {
+        if ('energyId' in updateObject) {
+            entryUpdate.energyId = new ObjectId(validation.checkId(updateObject.energyId, "energyId"));
+        }  
+        if ('activities' in updateObject) {
             entryUpdate.activities = [];
-            for (let i = 0; i < entryUpdate.activities.length; i++) {
-                entryUpdate.activities.push(new ObjectId(validation.checkId(entryUpdate[i], "activityId")));
+            for (let i = 0; i < updateObject.activities.length; i++) {
+                entryUpdate.activities.push(new ObjectId(validation.checkId(updateObject.activities[i], "activityId")));
             }
         }
-        if (updateObject.socials) {
+        if ('socials' in updateObject) {
             entryUpdate.socials = [];
-            for (let i = 0; i < entryUpdate.socials.length; i++) {
-                entryUpdate.socials.push(new ObjectId(validation.checkId(entryUpdate[i], "socialId")));
+            for (let i = 0; i < updateObject.socials.length; i++) {
+                entryUpdate.socials.push(new ObjectId(validation.checkId(updateObject.socials[i], "socialId")));
             }
         }
-        if (updateObject.notes) {
-            entryUpdate.notes = validation.checkString(entryUpdate.notes, "Notes");
+        if ('notes' in updateObject) {
+            entryUpdate.notes = validation.checkString(updateObject.notes, "Notes");
         }  
 
         // actual updating
         const entryCollection = await entries();
         await validation.checkOwnership(entryId, userId, entryCollection);
 
-        updateFields.updatedOn = new Date();
-        const updatedEntry = await entryCollection.updateOne(
+        entryUpdate.updatedOn = new Date();
+        const updatedEntry = await entryCollection.findOneAndUpdate(
             { _id: new ObjectId(entryId) },
-            { $set: entryUpdate }
+            { $set: entryUpdate },
+
+            // returns updated entry instead of return info
+            {returnDocument: 'after'}
         );
 
         return updatedEntry;

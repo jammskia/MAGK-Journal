@@ -18,6 +18,7 @@ export const entries = getCollectionFn('entries');
 
 export const activities = getCollectionFn('activities');
 export const emotions = getCollectionFn('emotions');
+export const energies = getCollectionFn('energies');
 export const socials = getCollectionFn('socials');
 
 

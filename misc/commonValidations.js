@@ -33,12 +33,20 @@ const exportedMethods = {
     }, 
 
     async checkOwnership(entryId, userId, entryCollection) {
-        const existingEntry = await entryCollection.findOne({ _id: new ObjectId(entryId), userId: new ObjectId(userId) });
-        if (!existingEntry) {
-            throw new Error("No entry found or you do not have permission to delete this entry");
-        }
+        const entry = await entryCollection.findOne({ _id: new ObjectId(entryId) });
+        if (!entry) throw 'No entry found with the given ID';
 
-        return existingEntry;
+        if (entry.userId.toString() !== userId.toString()) throw 'You do not have permission to modify this entry';
+    },
+
+    async checkRating(value, name = 'Value') {
+        if (!value) throw `${name} must be provided`;
+        if (typeof value !== 'number') throw `${name} must be a number`;
+
+        const isWhole = value % 1 === 0;
+        const isHalf = value % 1 === 0.5;
+
+        if (!isWhole && !isHalf) throw `${name} must be a whole number or a half increment`;
     }
 }
 

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "seed": "node seed.js",
+    "seed": "node scripts\\seed.js",
+    "default": "node scripts\\default.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
