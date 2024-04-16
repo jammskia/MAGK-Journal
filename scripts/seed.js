@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { entryData, activityData, socialData, emotionData, energyData } from '../data/dataIndex.js';
+import { entries } from '../config/mongoCollections.js';
 import { dbConnection } from '../config/mongoConnection.js';
 
 
@@ -51,7 +52,7 @@ const sampleEntries = [
         emotionId: joyful._id.toString(),
         energyId: lively._id.toString(),
         activities: [jogging._id.toString()],
-        socials: [],
+        socials: [friends._id.toString()],
         notes: "I love CS546"
     },
 
@@ -64,6 +65,22 @@ const sampleEntries = [
         socials: [],
         notes: "I hate life"
     }
+];
+
+// to test out the date functions:
+const sampleDateEntries = [
+    { 
+        _id: new ObjectId(), 
+        userId: sampleUsers[0]._id.toString(), 
+        date: new Date('2024-01-01T12:00:00Z'), 
+        notes: "Happy New Year" 
+    },
+    { 
+        _id: new ObjectId(), 
+        userId: sampleUsers[0]._id.toString(), 
+        date: new Date('2024-02-14T12:00:00Z'), 
+        notes: "Valentine's Day" 
+    },
 ];
 
 const seedEntries = async () => {
@@ -98,6 +115,18 @@ const seedEntries = async () => {
             );
 
             console.log("Updated Entry:", updatedEntry);
+
+            //// test out the dates
+            console.log("Got entry by date:")
+            console.log(await entryData.getEntryByDate(sampleUsers[0]._id.toString(),"2024-04-16"));
+
+            // month function:
+            const entryCollection = await entries();
+            await entryCollection.insertMany(sampleDateEntries);
+            console.log("Fake entries inserted");
+
+            const februaryEntries = await entryData.getEntriesByMonth(sampleUsers[0]._id.toString(), '2024', 'February');
+            console.log("February entries:", februaryEntries);
         }
 
         console.log("Entries seeded successfully");
@@ -110,8 +139,6 @@ const seedEntries = async () => {
 ///////// EXECUTION
 const seedDatabase = async () => {
     try {
-        console.log("Database cleared.");
-
         await seedEntries();
         console.log("Database seeded successfully.");
 

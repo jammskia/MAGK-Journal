@@ -1,0 +1,26 @@
+<h1>Entry Details</h1>
+<div class="entry">
+    <h2>Date: {{entry.date}}</h2>
+    <p>Notes: {{entry.notes}}</p>
+
+    <h3>Emotion: {{emotion.name}}</h3>
+    <h3>Energy: {{energy.name}}</h3>
+
+    <h3>Activities:</h3>
+    <ul>
+        {{#each activities}}
+        <li>{{this.name}}</li>
+        {{else}}
+        <li>No activities</li>
+        {{/each}}
+    </ul>
+
+    <h3>Socials:</h3>
+    <ul>
+        {{#each socials}}
+        <li>{{this.name}}</li>
+        {{else}}
+        <li>No social interactions</li>
+        {{/each}}
+    </ul>
+</div>

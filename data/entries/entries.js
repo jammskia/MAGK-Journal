@@ -72,51 +72,63 @@ const entryDataFunctions = {
 
     async getEntryByDate(userId, date) {
         userId = validation.checkId(userId, "userId");
-
+        
         // set range for querying
-        const startOfDay = new Date(date);
-        startOfDay.setHours(0, 0, 0, 0);
-        const endOfDay = new Date(date);
-        endOfDay.setHours(23, 59, 59, 999);
-
+        const targetDate = new Date(date);
+        targetDate.setUTCHours(0, 0, 0, 0);
+        const nextDay = new Date(targetDate);
+        nextDay.setDate(targetDate.getDate() + 1);
+        
         const entryCollection = await entries();
 
-        const dateEntry = await entryCollection.find({
-            userId: new ObjectId(userId),
+        const dateEntry = await entryCollection.findOne({
+            userId: userId,
+            date: {
+                // covers start of the day 00:00 to 23:59
+                $gte: targetDate,
+                $lt: nextDay
+            }
+        })
 
-            // covers start of the day 00:00 to 23:59
-            date: { $gte: startOfDay,
-                    $lte: endOfDay }
-        }).toArray();  
-
-        if (dateEntry.length === 0) throw `No entry found on ${date}`;
+        if (!dateEntry) throw `No entry found on ${targetDate} for user ${userId}`;
         return dateEntry;
     },
-
-    async getUserEntries(userId, startDate = null, endDate = null) {
+    
+    async getUserEntries(userId) {
         userId = validation.checkId(userId, "userId");
 
-        let query = { userId: new ObjectId(userId) };
-
-        // getting entries by date range
-        if (startDate || endDate) {
-            query.date = {};
-
-            // get all entries AFTER
-            if (startDate) {
-                query.date.$gte = new Date(startDate);
-            }
-
-            // get all entries BEFORE
-            if (endDate) {
-                query.date.$lte = new Date(endDate);
-            }
-        }
-
         const entryCollection = await entries();
-        const userEntries = await entryCollection.find(query).toArray();
+        const userEntries = await entryCollection.find({ userId: userId }).toArray();
         return userEntries;
     },
+
+    async getEntriesByMonth(userId, year, month) {
+        userId = validation.checkId(userId, "userId");
+    
+        // convert str input to number
+        const monthNames = {
+            January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+            July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
+        };
+        const monthNumber = monthNames[month];
+        year = parseInt(year);
+        if (year == null || monthNumber == null) throw 'Invalid year or month!';
+
+        const monthStart = new Date(Date.UTC(year, monthNumber, 1));
+        const monthEnd = new Date(Date.UTC(year, monthNumber + 1, 0, 23, 59, 59, 999));
+    
+        const entryCollection = await entries();
+        const monthEntries = await entryCollection.find({
+            userId: userId,
+            date: {
+                $gte: monthStart,
+                $lte: monthEnd
+            }
+        }).toArray();
+    
+        return monthEntries;
+    },
+    
 
     ///////////// UPDATE
     async updateEntry(userId, entryId, updateObject) {
