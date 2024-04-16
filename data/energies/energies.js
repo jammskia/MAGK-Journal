@@ -2,6 +2,7 @@ import { energies } from '../../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 
 import validation from "../../misc/commonValidations.js";
+import dataHelpers from "../commonData.js";
 
 const energyDataFunctions = {
     ///////////// CREATE
@@ -22,37 +23,20 @@ const energyDataFunctions = {
             value
         };
 
-        const energyCollection = await energies();
-        const insertResult = await energyCollection.insertOne(newEnergy);
-
-        if (!insertResult.insertedId) throw 'Insert failed!'
-        return await this.getEnergyById(insertResult.insertedId.toString());  
+        return dataHelpers.createItem(energies, newEnergy);  
     },
 
     ///////////// RETRIEVE
-    async getAllEnergies() {
-        const energyCollection = await energies();
-        return await energyCollection.find().toArray();
-    },
+    getAllEnergies: () => dataHelpers.getAllItems(energies),
 
-    async getEnergyById(energyId) {
+    getEnergyById: (energyId) => {
         energyId = validation.checkId(energyId, "energyId");
-
-        const energyCollection = await energies();
-        const energy = await energyCollection.findOne({ _id: new ObjectId(energyId) });
-
-        if (!energy) throw `Could not get energy with ID ${energyId}`;
-        return energy;
+        return dataHelpers.getItemById(energies, energyId);
     },
 
-    async getEnergyByLabel(label) {
+    getEnergyByLabel: (label) => {
         label = validation.checkString(label, "Energy name");
-
-        const energyCollection = await energies();
-        const energy = await energyCollection.findOne({ name: label });
-
-        if (!energy) throw `Could not get energy ${label}`;
-        return energy;
+        return dataHelpers.getItemByLabel(energies, label);
     }
 }
 

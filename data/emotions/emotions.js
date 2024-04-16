@@ -2,6 +2,7 @@ import { emotions } from '../../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 
 import validation from "../../misc/commonValidations.js";
+import dataHelpers from "../commonData.js";
 
 const emotionDataFunctions = {
     ///////////// CREATE
@@ -22,37 +23,20 @@ const emotionDataFunctions = {
             value
         };
 
-        const emotionCollection = await emotions();
-        const insertResult = await emotionCollection.insertOne(newEmotion);
-
-        if (!insertResult.insertedId) throw 'Insert failed!'
-        return await this.getEmotionById(insertResult.insertedId.toString()); 
+        return dataHelpers.createItem(emotions, newEmotion); 
     },
 
     ///////////// RETRIEVE
-    async getAllEmotions() {
-        const emotionCollection = await emotions();
-        return await emotionCollection.find().toArray();
-    },
+    getAllEmotions: () => dataHelpers.getAllItems(emotions),
 
-    async getEmotionById(emotionId) {
+    getEmotionById: (emotionId) => {
         emotionId = validation.checkId(emotionId, "emotionId");
-
-        const emotionCollection = await emotions();
-        const emotion = await emotionCollection.findOne({ _id: new ObjectId(emotionId) });
-
-        if (!emotion) throw `Could not get emotion with ID ${emotionId}`;
-        return emotion;
+        return dataHelpers.getItemById(emotions, emotionId);
     },
 
-    async getEmotionByLabel(label) {
+    getEmotionByLabel: (label) => {
         label = validation.checkString(label, "Emotion name");
-
-        const emotionCollection = await emotions();
-        const emotion = await emotionCollection.findOne({ name: label });
-
-        if (!emotion) throw `Could not get emotion ${label}`;
-        return emotion;
+        return dataHelpers.getItemByLabel(emotions, label);
     }
 }
 

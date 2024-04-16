@@ -2,6 +2,7 @@ import { entries } from '../../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 
 import validation from "../../misc/commonValidations.js";
+import dataHelpers from "../commonData.js";
 
 const entryDataFunctions = {
     ///////////// CREATE
@@ -58,27 +59,15 @@ const entryDataFunctions = {
             date: currentDate
         };
 
-        const entryCollection = await entries();
-        const insertResult = await entryCollection.insertOne(newEntry);
-
-        if (!insertResult.insertedId) throw 'Insert failed!'
-        return await this.getEntryById(insertResult.insertedId.toString()); 
+        return dataHelpers.createItem(entries, newEntry);
     },
 
     ///////////// RETRIEVE
-    async getAllEntries() {
-        const entryCollection = await entries();
-        return await entryCollection.find().toArray();
-    },
+    getAllEntries: () => dataHelpers.getAllItems(entries),
 
-    async getEntryById(entryId) {   
+    getEntryById(entryId) {   
         entryId = validation.checkId(entryId, "entryID");
-
-        const entryCollection = await entries();
-        const entry = await entryCollection.findOne({ _id: new ObjectId(entryId) });
-        
-        if (!entry) throw `Could not get entry with ID ${entryId}`;
-        return entry;
+        return dataHelpers.getItemById(entries, entryId);
     },
 
     async getEntryByDate(userId, date) {
@@ -100,7 +89,7 @@ const entryDataFunctions = {
                     $lte: endOfDay }
         }).toArray();  
 
-        if (entries.length === 0) throw `No entry found on ${date}`;
+        if (dateEntry.length === 0) throw `No entry found on ${date}`;
         return dateEntry;
     },
 
@@ -177,7 +166,7 @@ const entryDataFunctions = {
     ///////////// DELETE
     async deleteEntry(userId, entryId) {
         userId = validation.checkId(userId);
-        entryId = validation.checkId(userId);
+        entryId = validation.checkId(entryId);
 
         const entryCollection = await entries();
         await validation.checkOwnership(entryId, userId, entryCollection);

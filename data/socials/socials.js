@@ -1,7 +1,8 @@
-import { activities, socials } from '../../config/mongoCollections.js';
+import { socials } from '../../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 
 import validation from "../../misc/commonValidations.js";
+import dataHelpers from "../commonData.js";
 
 const socialDataFunctions = {
     ///////////// CREATE
@@ -19,37 +20,20 @@ const socialDataFunctions = {
             iconPath
         };
 
-        const socialCollection = await socials();
-        const insertResult = await socialCollection.insertOne(newSocial);
-
-        if (!insertResult.insertedId) throw 'Insert failed!'
-        return await this.getSocialById(insertResult.insertedId.toString()); 
+        return dataHelpers.createItem(socials, newSocial); 
     },
 
     ///////////// RETRIEVE
-    async getAllSocials() {
-        const socialCollection = await socials();
-        return await socialCollection.find().toArray();
-    },
+    getAllSocials: () => dataHelpers.getAllItems(socials),
 
-    async getSocialById(socialId) {
+    getSocialById: (socialId) => {
         socialId = validation.checkId(socialId, "socialId");
-
-        const socialCollection = await socials();
-        const social = await socialCollection.findOne({ _id: new ObjectId(socialId) });
-
-        if (!social) throw `Could not get social with ID ${socialId}`;
-        return social;
+        return dataHelpers.getItemById(socials, socialId);
     },
 
-    async getSocialByLabel(label) {
+    getSocialByLabel: (label) => {
         label = validation.checkString(label, "Social name");
-
-        const socialCollection = await socials();
-        const social = await socialCollection.findOne({ name: label });
-
-        if (!social) throw `Could not get social ${label}`;
-        return social;
+        return dataHelpers.getItemByLabel(socials, label);
     }
 }
 
