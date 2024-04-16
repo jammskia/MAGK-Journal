@@ -4,11 +4,7 @@ import { dbConnection } from '../config/mongoConnection.js';
 
 const initDefaults = async () => {
     try {
-        const db = await dbConnection();
-        await db.dropDatabase();
-
         console.log("Initializing emotions");
-
         await emotionData.createEmotion("Annoyed", "/icons/emotions/miserable.png", 1);
         await emotionData.createEmotion("Unhappy", "/icons/emotions/unhappy.png", 2);
         await emotionData.createEmotion("Content", "/icons/emotions/content.png", 3);
@@ -30,6 +26,7 @@ const initDefaults = async () => {
         await energyData.createEnergy("Fine", "/icons/energies/meh.png", 3);
         await energyData.createEnergy("Awake", "/icons/energies/awake.png", 4);
         await energyData.createEnergy("Lively", "/icons/energies/excited.png", 5);
+
     } catch (error) {
         console.error("Failed to initialize defaults:", error);
     }

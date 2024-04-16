@@ -1,19 +1,34 @@
 import { ObjectId } from 'mongodb';
-import { activities, entries, socials, users } from '../config/mongoCollections.js';
-import { entryData } from '../data/dataIndex.js';
+import { entryData, activityData, socialData, emotionData, energyData } from '../data/dataIndex.js';
 import { dbConnection } from '../config/mongoConnection.js';
 
-const emotionId1 = new ObjectId();
-const emotionId2 = new ObjectId();
-const energyId1 = new ObjectId();
-const energyId2 = new ObjectId();
 
-const activityId1 = new ObjectId();
-const activityId2 = new ObjectId();
-const activityId3 = new ObjectId();
-const socialId = new ObjectId();
+// make sure to either run defaults.js if you're doing it this way, else make your own traits
+///////// EMOTIONS
+const annoyed = await emotionData.getEmotionByLabel("Annoyed");
+const unhappy = await emotionData.getEmotionByLabel("Unhappy");
+const content = await emotionData.getEmotionByLabel("Content");
+const pleased = await emotionData.getEmotionByLabel("Pleased");
+const joyful = await emotionData.getEmotionByLabel("Joyful");
+
+///////// ENERGIES
+const drained = await energyData.getEnergyByLabel("Drained");
+const tired = await energyData.getEnergyByLabel("Tired");
+const fine = await energyData.getEnergyByLabel("Fine");
+const awake = await energyData.getEnergyByLabel("Awake");
+const lively = await energyData.getEnergyByLabel("Lively");
+
+///////// ACTIVITIES
+const jogging = await activityData.getActivityByLabel("Jogging");
+const gym = await activityData.getActivityByLabel("Gym");
+const homework = await activityData.getActivityByLabel("Homework");
+
+///////// SOCIALS
+const friends = await socialData.getSocialByLabel("Friends");
+const family = await socialData.getSocialByLabel("Family");
 
 ///////// USERS
+// TODO
 const sampleUsers = [
     { _id: new ObjectId(), username: "user1", email: "user1@example.com" },
     { _id: new ObjectId(), username: "user1", email: "user1@example.com" },
@@ -22,29 +37,29 @@ const sampleUsers = [
 ///////// ENTRIES
 const sampleEntries = [
     {
-        userId: sampleUsers[0]._id,
+        userId: sampleUsers[0]._id.toString(),
         date: new Date('2024-04-15'),
-        emotionId: emotionId1.toString(),
-        energyId: energyId1.toString(),
-        activities: [activityId1.toString(), activityId2.toString()],
-        socials: [socialId.toString()],
-        notes: "I feel great! I love coding!"
+        emotionId: joyful._id.toString(),
+        energyId: awake._id.toString(),
+        activities: [gym._id.toString()],
+        socials: [friends._id.toString()],
+        notes: "I feel great!"
     }, 
     {
-        userId: sampleUsers[0]._id,
+        userId: sampleUsers[0]._id.toString(),
         date: new Date('2024-04-14'),
-        emotionId: emotionId1.toString(),
-        energyId: energyId1.toString(),
-        activities: [activityId3.toString()],
+        emotionId: joyful._id.toString(),
+        energyId: lively._id.toString(),
+        activities: [jogging._id.toString()],
         socials: [],
         notes: "I love CS546"
     },
 
     {
-        userId: sampleUsers[1]._id,
+        userId: sampleUsers[1]._id.toString(),
         date: new Date('2024-01-01'),
-        emotionId: emotionId2.toString(),
-        energyId: energyId2.toString(),
+        emotionId: annoyed._id.toString(),
+        energyId: tired._id.toString(),
         activities: [],
         socials: [],
         notes: "I hate life"
@@ -52,80 +67,51 @@ const sampleEntries = [
 ];
 
 const seedEntries = async () => {
+    const createdEntries = []; 
     try {
         // create the entries
-        const createdEntry1 = await entryData.createEntry(
-            sampleEntries[0].userId.toString(), 
-            sampleEntries[0].emotionId.toString(),
-            sampleEntries[0].energyId.toString(),  
-            sampleEntries[0].activities, 
-            sampleEntries[0].socials,
-            sampleEntries[0].notes
-        );
-        console.log("Created Entry:", createdEntry1);
-
-        const createdEntry2 = await entryData.createEntry(
-            sampleEntries[1].userId.toString(), 
-            sampleEntries[1].emotionId.toString(),
-            sampleEntries[1].energyId.toString(), 
-            sampleEntries[1].activities, 
-            sampleEntries[1].socials,
-            sampleEntries[1].notes
-        );
-        console.log("Created Entry:", createdEntry2);
-
-        const createdEntry3 = await entryData.createEntry(
-            sampleEntries[2].userId.toString(), 
-            sampleEntries[2].emotionId.toString(), 
-            sampleEntries[2].energyId.toString(),
-            sampleEntries[2].activities, 
-            sampleEntries[2].socials,
-            sampleEntries[2].notes
-        );
-        console.log("Created Entry:", createdEntry3);
-
+        for (const sampleEntry of sampleEntries) {
+            const createdEntry = await entryData.createEntry(
+                sampleEntry.userId, 
+                sampleEntry.emotionId,
+                sampleEntry.energyId,  
+                sampleEntry.activities, 
+                sampleEntry.socials,
+                sampleEntry.notes
+            );
+            console.log("Created Entry:", createdEntry);
+            createdEntries.push(createdEntry);
+        }
 
         // update the entry
-        const updateObject = {
-            notes: "Nevermind",
-            activities: [activityId1.toString()],
-            socials: [],
-        };
+        if (createdEntries.length > 0) {
+            const updateObject = {
+                notes: "Nevermind",
+                activities: [homework._id.toString()],
+                socials: [],
+            };
 
-        const updatedEntry = await entryData.updateEntry(
-            createdEntry1.userId.toString(),
-            createdEntry1._id.toString(),
-            updateObject
-        );
+            const updatedEntry = await entryData.updateEntry(
+                createdEntries[0].userId.toString(),
+                createdEntries[0]._id.toString(),
+                updateObject
+            );
 
-        console.log("Updated Entry:", updatedEntry);
-        console.log("Entries seeded successfully")
+            console.log("Updated Entry:", updatedEntry);
+        }
+
+        console.log("Entries seeded successfully");
 
     } catch (e) {
         console.log("Error seeding entries", e);
     }
-}
-
-// const seedDefaultAES  = async () => {
-//     try {
-//         const 
-
-//     } catch (e) {
-//         console.log("Error seeding defaults", e);
-//     }
-// }
-
+};
 
 ///////// EXECUTION
 const seedDatabase = async () => {
     try {
-        // drop the db
-        const db = await dbConnection();
-        await db.dropDatabase();
-
         console.log("Database cleared.");
 
-        // seedDddDDDDD
         await seedEntries();
         console.log("Database seeded successfully.");
 
@@ -135,5 +121,3 @@ const seedDatabase = async () => {
 }
 
 seedDatabase();
-
-
