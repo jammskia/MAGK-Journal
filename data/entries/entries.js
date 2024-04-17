@@ -138,25 +138,25 @@ const entryDataFunctions = {
         // check fields to update
         let entryUpdate = {};
         if ('emotionId' in updateObject) {
-            entryUpdate.emotionId = new ObjectId(validation.checkId(updateObject.emotionId, "emotionId"));
+            entryUpdate.emotionId = validation.checkId(updateObject.emotionId, "emotionId");
         }  
         if ('energyId' in updateObject) {
-            entryUpdate.energyId = new ObjectId(validation.checkId(updateObject.energyId, "energyId"));
+            entryUpdate.energyId = validation.checkId(updateObject.energyId, "energyId");
         }  
         if ('activities' in updateObject) {
             entryUpdate.activities = [];
             for (let i = 0; i < updateObject.activities.length; i++) {
-                entryUpdate.activities.push(new ObjectId(validation.checkId(updateObject.activities[i], "activityId")));
+                entryUpdate.activities.push(validation.checkId(updateObject.activities[i], "activityId"));
             }
         }
         if ('socials' in updateObject) {
             entryUpdate.socials = [];
             for (let i = 0; i < updateObject.socials.length; i++) {
-                entryUpdate.socials.push(new ObjectId(validation.checkId(updateObject.socials[i], "socialId")));
+                entryUpdate.socials.push(validation.checkId(updateObject.socials[i], "socialId"));
             }
         }
         if ('notes' in updateObject) {
-            entryUpdate.notes = validation.checkString(updateObject.notes, "Notes");
+            entryUpdate.notes = validation.checkString(updateObject.notes, "Notes", 0);
         }  
 
         // actual updating

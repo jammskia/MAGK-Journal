@@ -1,13 +1,17 @@
-<a href="/entries/new">Create a New Entry</a>
-<ul>
-    {{#each entries}}
-    <li>
-        <a href="/entries/{{this._id}}">
-            <div>
-                <p>{{formatDate this.date}}</p>
-                <p>{{this.notes}}</p>
-            </div>
-        </a>
-    </li>
-    {{/each}}
-</ul>
+<section class="entries-list">
+    <a href="/entries/new">Create a New Entry</a>
+    <ul>
+        {{#each entries}}
+        <li>
+            <a href="/entries/{{this._id}}">
+                <div>
+                    <p>{{formatDate this.date}}</p>
+                    <p>{{this.notes}}</p>
+                </div>
+            </a>
+        </li>
+        {{/each}}
+    </ul>
+</section>
+
+

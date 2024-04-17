@@ -4,7 +4,9 @@ const constructorMethod = (app) => {
     app.use('/entries', entryRoutes);
 
     app.get('/', (req, res) => {
-        res.render('home');
+        res.render('home', {
+            title: 'Home'
+        });
     });
 
     app.use('*', (req, res) => {

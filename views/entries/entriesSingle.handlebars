@@ -1,6 +1,9 @@
 <h1>Entry Details</h1>
 <div class="entry">
     <h2>Date: {{formatDate entry.date}}</h2>
+    {{#if entry.updatedOn}}
+    <h2>Edited on: {{formatDate entry.updatedOn}}</h2>
+    {{/if}}
     <p>Notes: {{entry.notes}}</p>
 
     <h3>Emotion: {{emotion.name}}</h3>
@@ -23,6 +26,17 @@
         <li>No social interactions</li>
         {{/each}}
     </ul>
+
+
+    <!-- button to edit -->
+    <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
+
+    <!-- button to delete -->
+    <form action="/entries/{{entry._id}}/delete" method="POST">
+        <input type="hidden" name="userId" value="{{entry.userId}}">
+        <button type="submit">Delete Entry</button>
+    </form>
+
 
     <a href="/entries">Back to all Entries</a>
 </div>

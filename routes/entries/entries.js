@@ -7,13 +7,16 @@ router.route('/')
     .get(async (req, res) => {
         try {
             const entryList = await entryData.getAllEntries();
-            return res.render("entries/entriesAll", { entries: entryList });
+            return res.render("entries/entriesAll", { 
+                title: "Entries",
+                entries: entryList 
+            });
             
         } catch (e) {
             console.log('Error fetching all entries:', e);
             return res.status(500).render('errorPage', { 
                 status: '500',
-                error : 'Failed to fetch all entries.'
+                error: 'Failed to fetch all entries.'
             });
         }    
     })
@@ -124,11 +127,12 @@ router.route('/:id')
             }
 
             return res.render('entries/entriesSingle', { 
+                title: "Entry",
                 entry: singleEntry,
-                emotion: emotion,
-                energy: energy,
-                activities: activities,
-                socials: socials
+                emotion,
+                energy,
+                activities,
+                socials
             });
 
         } catch (e) {
@@ -136,6 +140,96 @@ router.route('/:id')
             return res.status(500).render('errorPage', { 
                 status: '500',
                 error: 'Error fetching entry.' 
+            });
+        }
+    });
+
+router.route('/:id/edit')
+    .get(async (req, res) => {
+        try {
+            const entryId = req.params.id;
+            const singleEntry = await entryData.getEntryById(entryId);
+
+            if (!singleEntry) {
+                return res.status(404).render('errorPage', {
+                    status: '404',
+                    error: 'Entry not found'
+                });
+            }
+
+            const emotions = await emotionData.getAllEmotions();
+            const energies = await energyData.getAllEnergies();
+            const activities = await activityData.getAllActivities();
+            const socials = await socialData.getAllSocials();
+
+            res.render('entries/entriesEdit', {
+                title: 'Edit Entry',
+                entry: singleEntry,
+                emotions,
+                energies,
+                activities,
+                socials
+            });
+        } catch (e) {
+            console.log('Error displaying entry edit form:', e);
+            res.status(500).render('errorPage', {
+                status: '500',
+                error: 'Failed to load edit entry form.'
+            });
+        }
+    })
+    .post(async (req, res) => {
+        const entryId = req.params.id;
+        let { userId, emotionId, energyId, activities, socials, notes } = req.body;
+
+        if (!Array.isArray(activities)) {
+            if (activities) {
+                activities = [activities];
+            } else {
+                activities = []
+            }
+        }
+        if (!Array.isArray(socials)) {
+            if (socials) {
+                socials = [socials];
+            } else {
+                socials = []
+            }
+        }
+
+        try {
+            const updateObject = {
+                emotionId,
+                energyId,
+                activities,
+                socials,
+                notes
+            };
+
+            const updatedEntry = await entryData.updateEntry(userId, entryId, updateObject);
+            res.redirect(`entries/${entryId}`);
+        } catch (e) {
+            console.log('Failed to update entry:', e);
+            res.status(400).render('errorPage', {
+                status: '400',
+                error: 'Failed to update entry.'
+            })
+        }
+    });
+
+router.route('/:id/delete')
+    .post(async (req, res) => {
+        const entryId = req.params.id;
+        const userId = req.body.userId;
+
+        try {
+            await entryData.deleteEntry(userId, entryId);
+            return res.redirect('/entries');
+        } catch (e) {
+            console.log('Failed to delete entry:', e);
+            res.status(400).render('errorPage', {
+                status: '400',
+                error: 'Failed to delete entry.'
             });
         }
     });
