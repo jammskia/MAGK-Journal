@@ -1,17 +1,24 @@
-<section class="entries-list">
-    <a href="/entries/new">Create a New Entry</a>
-    <ul>
+<section id="all_entries">
+    <div class="entry_card" id="newEntry_card">
+        <h3>Create a new entry!</h3>
+        <a href="/entries/new" id="newEntry_button">+</a>
+    </div>
+    
+    <div id="past_entries">
+        <h2>Past Entries:</h2>
+        <ul>
         {{#each entries}}
-        <li>
-            <a href="/entries/{{this._id}}">
+            <li class="entry_card">
+                <h3>{{formatDate this.date}}</h3>
+                <p>{{this.notes}}</p>
                 <div>
-                    <p>{{formatDate this.date}}</p>
-                    <p>{{this.notes}}</p>
-                </div>
-            </a>
-        </li>
+                    <a href="/entries/{{this._id}}">View</a>
+                    <a href="/entries/{{this._id}}/edit">Edit</a>
+                </div>    
+            </li>
         {{/each}}
-    </ul>
+        </ul>
+    </div>
+    
 </section>
-
 

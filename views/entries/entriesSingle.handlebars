@@ -1,15 +1,14 @@
-<h1>Entry Details</h1>
-<div class="entry">
-    <h2>Date: {{formatDate entry.date}}</h2>
+<section class="entry">
+    <h3>Date: {{formatDate entry.date}}</h3>
     {{#if entry.updatedOn}}
-    <h2>Edited on: {{formatDate entry.updatedOn}}</h2>
+    <h3>Edited on: {{formatDate entry.updatedOn}}</h3>
     {{/if}}
     <p>Notes: {{entry.notes}}</p>
 
-    <h3>Emotion: {{emotion.name}}</h3>
-    <h3>Energy: {{energy.name}}</h3>
+    <h4>Emotion: {{emotion.name}}</h4>
+    <h4>Energy: {{energy.name}}</h4>
 
-    <h3>Activities:</h3>
+    <h4>Activities:</h4>
     <ul>
         {{#each activities}}
         <li>{{this.name}}</li>
@@ -18,7 +17,7 @@
         {{/each}}
     </ul>
 
-    <h3>Socials:</h3>
+    <h4>Socials:</h3>
     <ul>
         {{#each socials}}
         <li>{{this.name}}</li>
@@ -26,7 +25,6 @@
         <li>No social interactions</li>
         {{/each}}
     </ul>
-
 
     <!-- button to edit -->
     <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
@@ -38,5 +36,5 @@
     </form>
 
 
-    <a href="/entries">Back to all Entries</a>
-</div>
+    <button><a href="/entries">Back to all Entries</a></button>
+</section>

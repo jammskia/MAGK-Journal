@@ -207,7 +207,7 @@ router.route('/:id/edit')
             };
 
             const updatedEntry = await entryData.updateEntry(userId, entryId, updateObject);
-            res.redirect(`entries/${entryId}`);
+            return res.redirect(`entries/${entryId}`);
         } catch (e) {
             console.log('Failed to update entry:', e);
             res.status(400).render('errorPage', {
