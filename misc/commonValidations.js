@@ -14,7 +14,10 @@ const exportedMethods = {
     }, 
 
     checkString(str, name = "String", minLength = 1, maxLength = 255) {
-        if (!str) throw `${name} must be provided`;
+        if (minLength !== 0) {
+            if (!str) throw `${name} must be provided`;
+        }
+        
         if (typeof str !== 'string') throw `${name} must be a string`;
 
         str = str.trim();

@@ -7,7 +7,17 @@ app.use('/public', express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs.engine({ 
+    defaultLayout: 'main',
+
+    // formats date to be like 'Monday January 1'
+    helpers: {
+        formatDate: (date) => {
+            const formats = { weekday: 'long', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString('en-US', formats);
+        }
+    }
+}));
 app.set('view engine', 'handlebars');
 
 configRoutes(app);

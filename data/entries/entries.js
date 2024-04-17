@@ -29,7 +29,7 @@ const entryDataFunctions = {
             socials[i] = validation.checkId(socials[i], `Socials: ${socials[i]}`);
         }
     
-        notes = validation.checkString(notes, "notes");
+        notes = validation.checkString(notes, "notes", 0);
 
         // check for an existing entry today
         const currentDate = new Date();

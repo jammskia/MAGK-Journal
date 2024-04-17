@@ -11,8 +11,90 @@ router.route('/')
             
         } catch (e) {
             console.log('Error fetching all entries:', e);
-            return res.status(500).json({ error: e });
+            return res.status(500).render('errorPage', { 
+                status: '500',
+                error : 'Failed to fetch all entries.'
+            });
         }    
+    })
+    .post(async (req, res) => {
+        try {
+            let { userId, emotionId, energyId, activities, socials, notes } = req.body;
+
+            // makes sure that activites and socials are sent, even if not selected
+            if (!Array.isArray(activities)) {
+                // if only one is sent, wrap it around since it would be a string
+                if (activities) {
+                    activities = [activities];
+                // if nothing is selected, make sure it is still an empty array, since it would be undefined
+                } else {
+                    activities = []
+                }
+            }
+            if (!Array.isArray(socials)) {
+                if (socials) {
+                    socials = [socials];
+                } else {
+                    socials = []
+                }
+            }
+
+            console.log('Received data:', req.body);
+
+            validation.checkId(userId, "userId");
+            validation.checkId(emotionId, "emotionId");
+            validation.checkId(energyId, "energyId");
+            for (let i = 0; i < activities.length; i++) {
+                validation.checkId(activities[i], "activityId");
+            }
+            for (let i = 0; i < socials.length; i++) {
+                validation.checkId(socials[i], "socialId");
+            }
+            validation.checkString(notes, "notes", 0)
+
+            const newEntry = await entryData.createEntry(
+                userId,
+                emotionId,
+                energyId,
+                activities,
+                socials,
+                notes
+            );
+            return res.redirect(`/entries/${newEntry._id}`);
+
+        } catch (e) {
+            console.log('Failed to create entry:', e);
+            return res.status(400).render('errorPage', { 
+                status: '400',
+                error: 'Failed to create entry.'
+            });
+            
+        }
+    });
+
+
+router.route('/new')
+    .get(async (req, res) => {
+        try {
+            const emotions = await emotionData.getAllEmotions();
+            const energies = await energyData.getAllEnergies();
+            const activities = await activityData.getAllActivities();
+            const socials = await socialData.getAllSocials();
+
+            res.render('entries/entriesNew', {
+                title: 'Create New Entry',
+                emotions,
+                energies,
+                activities,
+                socials
+            });
+        } catch (e) {
+            console.log('Error displaying new entry form:', e);
+            res.status(500).render('errorPage', { 
+                status: '500',
+                error: 'Failed to load new entry form.'
+            });
+        }
     });
 
 router.route('/:id')
@@ -23,7 +105,10 @@ router.route('/:id')
 
             const singleEntry = await entryData.getEntryById(entryId);
             if (!singleEntry) {
-                return res.status(404).json({ error: `Entry [${entryId}] not found` });
+                return res.status(404).render('errorPage', { 
+                    status: '404',
+                    error: `Entry [${entryId}] not found` 
+                });
             }
 
             // get the traits
@@ -48,7 +133,10 @@ router.route('/:id')
 
         } catch (e) {
             console.log('Error fetching entry:', e);
-            return res.status(500).json({ error: e });
+            return res.status(500).render('errorPage', { 
+                status: '500',
+                error: 'Error fetching entry.' 
+            });
         }
     });
     

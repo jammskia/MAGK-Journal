@@ -1,0 +1,61 @@
+<h1>Create New Entry</h1>
+<form action="/entries" method="POST">
+
+    <!-- HARDCODED USERID FOR TESTING -->
+    <input type="hidden" name="userId" value="661ef93ef760ab084b70a4a2">
+    
+    <fieldset>
+        <h2>Emotions:</h2>
+        <div>
+            {{#each emotions}}
+            <label>
+                <input type="radio" name="emotionId" value="{{this._id}}" required>
+                <span>{{this.name}}</span>
+            </label>
+            {{/each}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <h2>Energy:</h2>
+        <div>
+            {{#each energies}}
+            <label>
+                <input type="radio" name="energyId" value="{{this._id}}" required>
+                <span>{{this.name}}</span>
+            </label>
+            {{/each}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <h2>Activities:</h2>
+        <div>
+            {{#each activities}}
+            <label>
+                <input type="checkbox" name="activities" value="{{this._id}}">
+                <span>{{this.name}}</span>
+            </label>
+            {{/each}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <h2>Socials:</h2>
+        <div>
+            {{#each socials}}
+            <label>
+                <input type="checkbox" name="socials" value="{{this._id}}">
+                <span>{{this.name}}</span>
+            </label>
+            {{/each}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <h2>Notes:</h2>
+        <textarea name="notes" id="notes"></textarea>
+    </fieldset>
+
+    <button type="submit">Submit Entry</button>
+</form>

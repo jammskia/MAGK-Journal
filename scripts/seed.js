@@ -49,7 +49,7 @@ const sampleEntries = [
     {
         userId: sampleUsers[0]._id.toString(),
         date: new Date('2024-04-14'),
-        emotionId: joyful._id.toString(),
+        emotionId: pleased._id.toString(),
         energyId: lively._id.toString(),
         activities: [jogging._id.toString()],
         socials: [friends._id.toString()],
@@ -68,20 +68,20 @@ const sampleEntries = [
 ];
 
 // to test out the date functions:
-const sampleDateEntries = [
-    { 
-        _id: new ObjectId(), 
-        userId: sampleUsers[0]._id.toString(), 
-        date: new Date('2024-01-01T12:00:00Z'), 
-        notes: "Happy New Year" 
-    },
-    { 
-        _id: new ObjectId(), 
-        userId: sampleUsers[0]._id.toString(), 
-        date: new Date('2024-02-14T12:00:00Z'), 
-        notes: "Valentine's Day" 
-    },
-];
+// const sampleDateEntries = [
+//     { 
+//         _id: new ObjectId(), 
+//         userId: sampleUsers[0]._id.toString(), 
+//         date: new Date('2024-01-01T12:00:00Z'), 
+//         notes: "Happy New Year" 
+//     },
+//     { 
+//         _id: new ObjectId(), 
+//         userId: sampleUsers[0]._id.toString(), 
+//         date: new Date('2024-02-14T12:00:00Z'), 
+//         notes: "Valentine's Day" 
+//     },
+// ];
 
 const seedEntries = async () => {
     const createdEntries = []; 
@@ -121,12 +121,12 @@ const seedEntries = async () => {
             console.log(await entryData.getEntryByDate(sampleUsers[0]._id.toString(),"2024-04-16"));
 
             // month function:
-            const entryCollection = await entries();
-            await entryCollection.insertMany(sampleDateEntries);
-            console.log("Fake entries inserted");
+            // const entryCollection = await entries();
+            // await entryCollection.insertMany(sampleDateEntries);
+            // console.log("Fake entries inserted");
 
-            const februaryEntries = await entryData.getEntriesByMonth(sampleUsers[0]._id.toString(), '2024', 'February');
-            console.log("February entries:", februaryEntries);
+            // const februaryEntries = await entryData.getEntriesByMonth(sampleUsers[0]._id.toString(), '2024', 'February');
+            // console.log("February entries:", februaryEntries);
         }
 
         console.log("Entries seeded successfully");
