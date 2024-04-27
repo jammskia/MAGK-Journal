@@ -31,10 +31,8 @@
 
         <!-- button to delete -->
         <form action="/entries/{{entry._id}}/delete" method="POST">
-            <input type="hidden" name="userId" value="{{entry.userId}}">
             <button type="submit">Delete Entry</button>
         </form>
-
 
         <button><a href="/entries">Back to all Entries</a></button>
 </section>

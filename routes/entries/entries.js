@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { entryData, activityData, socialData, emotionData, energyData } from '../../data/dataIndex.js';
+import { entryData, activityData, socialData, emotionData, energyData, userData } from '../../data/dataIndex.js';
 import validation from '../../misc/commonValidations.js';
 const router = Router();
 
@@ -41,6 +41,11 @@ router.route('/')
                     socials = []
                 }
             }
+
+            //// Testing Only /////
+            let allUsers = await userData.getAllUsers();
+            userId = allUsers[0]._id.toString()
+            //// Testing Only /////
 
             console.log('Received data:', req.body);
 
@@ -183,6 +188,11 @@ router.route('/:id/edit')
         const entryId = req.params.id;
         let { userId, emotionId, energyId, activities, socials, notes } = req.body;
 
+        //// Testing Only /////
+        let allUsers = await userData.getAllUsers();
+        userId = allUsers[0]._id.toString()
+        //// Testing Only /////
+
         if (!Array.isArray(activities)) {
             if (activities) {
                 activities = [activities];
@@ -221,7 +231,12 @@ router.route('/:id/edit')
 router.route('/:id/delete')
     .post(async (req, res) => {
         const entryId = req.params.id;
-        const userId = req.body.userId;
+        let userId = req.body.userId;
+
+        //// Testing Only /////
+        let allUsers = await userData.getAllUsers();
+        userId = allUsers[0]._id.toString()
+        //// Testing Only /////
 
         try {
             await entryData.deleteEntry(userId, entryId);
