@@ -29,11 +29,11 @@ const initDefaults = async () => {
         await socialData.createSocial("Family", "/icons/socials/Family.png");
 
         console.log("Initializing energies...");
-        await energyData.createEnergy("Drained", "/icons/energies/exhausted.png", 1);
-        await energyData.createEnergy("Tired", "/icons/energies/tired.png", 2);
+        await energyData.createEnergy("Lively", "/icons/energies/excited.png", 1);
+        await energyData.createEnergy("Awake", "/icons/energies/awake.png", 2);
         await energyData.createEnergy("Fine", "/icons/energies/meh.png", 3);
-        await energyData.createEnergy("Awake", "/icons/energies/awake.png", 4);
-        await energyData.createEnergy("Lively", "/icons/energies/excited.png", 5);
+        await energyData.createEnergy("Tired", "/icons/energies/tired.png", 4);
+        await energyData.createEnergy("Drained", "/icons/energies/exhausted.png", 5);
 
         console.log("Done initializing");
     } catch (error) {
