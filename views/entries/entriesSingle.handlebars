@@ -1,38 +1,56 @@
-<section class="entry">
-    <h3>Date: {{formatDate entry.date}}</h3>
-    {{#if entry.updatedOn}}
-    <h3>Edited on: {{formatDate entry.updatedOn}}</h3>
-    {{/if}}
-    <p>Notes: {{entry.notes}}</p>
+<div class="main-container">
+    <div>
+        <section id="entries-single">
+            <header>
+                <div id="emotion-circle">
+                    <img src="{{emotion.iconPath}}">
+                </div>
+                <div id="energy-bar">
+                    <span class="energy-indicator"></span>
+                    <span class="energy-indicator"></span>
+                    <span class="energy-indicator"></span>
+                    <span class="energy-indicator"></span>
+                    <span class="energy-indicator"></span>
+                </div>
+            </header>
+             
+            <h1>{{entry.title}}</h1>
+            <div id="entry-dates">
+                <h4>{{formatDate entry.date}}</h4>
+                {{#if entry.updatedOn}}
+                <h4>Updated on: {{formatDate entry.updatedOn}}</h4>
+                {{/if}}
+            </div>
+            <p>{{entry.notes}}</p>
 
-    <h4>Emotion: {{emotion.name}}</h4>
-    <h4>Energy: {{energy.name}}</h4>
+            <div>
+                <h2>Activities</h2>
+                <ul>
+                    {{#each activities}}
+                    <li>{{this.name}}</li>
+                    {{else}}
+                    <li>No activities</li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div>
+                <h2>Socials</h2>
+                <ul>
+                    {{#each socials}}
+                    <li>{{this.name}}</li>
+                    {{else}}
+                    <li>No social interactions</li>
+                    {{/each}}
+                </ul>
+            </div>
 
-    <h4>Activities:</h4>
-    <ul>
-        {{#each activities}}
-        <li>{{this.name}}</li>
-        {{else}}
-        <li>No activities</li>
-        {{/each}}
-    </ul>
+            <div>
+                <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
+                <form action="/entries/{{entry._id}}/delete" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </section>  
+    </div>
+</div>
 
-    <h4>Socials:</h3>
-        <ul>
-            {{#each socials}}
-            <li>{{this.name}}</li>
-            {{else}}
-            <li>No social interactions</li>
-            {{/each}}
-        </ul>
-
-        <!-- button to edit -->
-        <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
-
-        <!-- button to delete -->
-        <form action="/entries/{{entry._id}}/delete" method="POST">
-            <button type="submit">Delete Entry</button>
-        </form>
-
-        <button><a href="/entries">Back to all Entries</a></button>
-</section>

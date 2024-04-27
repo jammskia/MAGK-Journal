@@ -8,18 +8,18 @@ const energyDataFunctions = {
     ///////////// CREATE
     async createEnergy(
         name,
-        iconPath,
+        color,
         value) {
 
         name = validation.checkString(name, "Energy name");
-        iconPath = validation.checkString(iconPath, "Energy iconPath");
+        color = validation.checkString(color, "Energy color");
         validation.checkRating(value, "Energy value");
 
         const energyId = new ObjectId();
         let newEnergy = {
             _id: energyId,
             name,
-            iconPath,
+            color,
             value
         };
 

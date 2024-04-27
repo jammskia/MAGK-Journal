@@ -4,10 +4,15 @@
 }
 
 html {
+    font-family: Lexend, sans-serif;
+
+    background-color: #130F30;
+}
+
+/* 
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ///////////////////////// nav bar ///////////////////////// */
 
 header {
     width: 100%;
@@ -60,62 +65,151 @@ header {
 
 nav li {
     padding: 10px 15px;
-}
+} */
 
-
-/* ///////////////////////// main ///////////////////////// */
 
 body {
     display: flex;
-    flex-direction: column;
     min-height: 100vh;
-    background-image: url('/public/images/Paper1.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
-h1 {
-    text-align: center;
-    margin: 25px auto;
+main {
+    flex-grow: 1;
 }
 
-/* ///////////////////////// allEntries ///////////////////////// */
+/* ################### nav bar ################### */
+#nav-container {
+    display: flex;
 
-#all_entries {
+    width: 275px;
+    background-color: #EFECFF;
+}
+
+nav {
     display: flex;
     flex-direction: column; 
-    align-items: center;
+    align-items: center; 
+
+    min-width: 70%;
+    height: 90%;
+
+    margin: auto;
+
+    background-color: #130F30;
+    
+    color: #ffffff;
+
+    border-radius: 10px;
 }
 
-#all_entries ul {
+nav .logo_home {
+    height: 120px;
+    margin: 20px auto; 
+}
+
+nav ul {
+    list-style-type: none;
+    width: 100%;
+}
+
+nav ul li {
+    padding: 10px 25px; 
+
+    font-size: 20px;
+
+    transition: background-color 0.3s ease;
+}
+
+nav ul li:hover {
+    background-color: #002f7b;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
+/* ################### entriesAll ################### */
+main {
+    background-color: #EFECFF;
+}
+
+#entries-all {
+    margin-top: 70px;
+}
+
+.greeting h1 {
+    font-size: 40px;
+}
+
+.greeting p {
+    color: #545454;
+}
+
+/* create entry button */
+#create-entry a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+
+    width: 90%;
+    height: 100px;
+
+    margin: 30px 0px;
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    background-color: #9F8BFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#create-entry h3 {
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+#create-entry > a > p {
+    font-size: 5em;
+    padding-bottom: 0.2em;
+}
+
+/* past entries */
+#past-entries {
+    background-color: #ffffff;
+
+    width: 90%;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column; 
+
+
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+#past-entries h2 {
+    margin-bottom: 30px;
+}
+
+#past-entries ul {
     list-style: none;
 
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
     justify-content: center;
 
-    gap: 40px;
-
-    align-items: center;
+    margin: 10px;
 }
 
-
-/* past entries */
-#past_entries {
-    padding: 0px 0px 50px;
-}
-
-#past_entries h2 {
-    text-align: center;
-    margin: 20px auto;
-}
-
-/* card design */
-.entry_card {
-    background-color: #fff8dc;
-
-    border: 2px solid #eae0d6;
+.entry-card {
     border-radius: 5px;
 
     display: flex;
@@ -125,99 +219,141 @@ h1 {
     height: 14em;
     width: 14em;
 
-    box-shadow: 2px 5px 7px rgba(1, 1, 1, 0.2);
+    margin: 20px;
+
+    padding: 15px;
+
+    box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+    text-align: center;
 }
 
-.entry_card:hover {
+.entry-card:hover {
     box-shadow:10px 10px 7px rgba(0, 0, 0, .5);
     transform: scale(1.1); 
 }
 
-.entry_card h3 {
-    font-size: 1.2em;;
-    text-align: center;
+.entry-card h4 {
+    font-weight: normal;
+}
+
+.entry-card p {
+    color: #545454;
+}
+
+.entry-card a {
+    background-color: #ffffff;
 
     padding: 10px;
 
-    border-bottom: 3px solid #eae0d6;
-}
-
-.entry_card p {
-    flex-grow: 1;
-    padding: 10px 10px 0px;
-    
-}
-
-.entry_card div {
-    text-align: center;
-    padding-bottom: 20px;
-}
-
-#all_entries a {
     text-decoration: none;
-    text-align: center;
-    color: black;
+    color: #130F30;
 
-    border-radius: 3px;
-
-    background: #eae0d6;
-    margin: 0 5px;
-    padding: 5px 10px; 
-
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
 }
 
-#all_entries a:hover {
-    background-color: #c8bfb2;
-    color: white;
+/* colour-coded by emotion */
+.entry-card.Annoyed {
+    background-color: #F1959A;
 }
 
-/* special new entry button */
-#newEntry_card {
-    justify-content: center;
+.entry-card.Unhappy {
+    background-color: #FCBD8F;
+}
+
+.entry-card.Content {
+    background-color: #F4E6B1;
+}
+
+.entry-card.Pleased {
+    background-color: #97C1A9;
+}
+
+.entry-card.Joyful {
+    background-color: #B8E2A2;
+}
+
+
+/* ################### entriesSingle ################### */
+.main-container {
+    background-color: #130F30;
+    height: 100vh;
+}
+
+.main-container > div {
+    background-color: #EFECFF;
+    height: 100vh;
+    margin: 0px 160px;
+
+    align-content: center;
+}
+
+#entries-single {
+    background-color: #ffffff;
+
+    position: relative;
+    width: 500px;
+    margin: auto;
+
+    border-radius: 12px;
+    box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.2);
+}
+
+
+#emotion-circle {
+    position: absolute;
+    top: -20%;
+    left: 5%;
+    z-index: 10;
+}
+
+#emotion-circle img {
+    background: #fff;
+    
+    padding: 10px;
+
+    width: 120px;
+    height: 120px;
+
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+#energy-bar {
+    position: absolute;
+    top: -10%;
+    left: 30%;
+    right: 0;
+
+    height: 50px;
+    width: 290px;
+
+    padding-left: 6%;
+
+
+    display: flex;
     align-items: center;
 
-    height: 18em;
-    width: 18em;
+    background-color: #ffffff;
 
-    margin-bottom: 50px;
+    border-radius: 0px 50px 50px 0px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-#newEntry_card a {
-    font-size: 8em;
-    background-color: #fff8dc;
+.energy-indicator {
+    width: 50px; 
+    height: 34px;
+
+    margin-right: 1%;
+
+    background-color: #ccc;
+
+    box-shadow: inset 3px 3px 15px rgba(0, 0, 0, 0.1);
 }
 
-#newEntry_card a:hover{
-    color: #919191;
-    background-color: #fff8dc;
-}
-
-/* ///////////////////////// singleEntries ///////////////////////// */
-
-.entry {
-    background-color: #fff8dc;
-    
-    margin: 50px auto;
-    padding: 20px;
-    max-width: 600px;
-
-    border-radius: 5px;
-    border: 2px solid #eae0d6;
-    box-shadow: 2px 5px 7px rgba(1, 1, 1, .2);
-}
-
-.entry ul {
-    list-style: none;
-}
-
-.entry li {
-    background-color: #eae0d6;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 3px;
-}
+/* ///////////////////////// moodMeter ///////////////////////// */
 
 #moodMeter {
     padding-top: 50px;
@@ -288,4 +424,3 @@ h1 {
   border-color: black;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
 }
-

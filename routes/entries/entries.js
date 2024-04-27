@@ -7,9 +7,27 @@ router.route('/')
     .get(async (req, res) => {
         try {
             const entryList = await entryData.getAllEntries();
-            return res.render("entries/entriesAll", {
-                title: "Entries",
-                entries: entryList
+            entryList.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            // this passes an emotionName to the object for the colour-coded card functionality
+            for (let entry of entryList) {
+                try {
+                    const emotion = await emotionData.getEmotionById(entry.emotionId);
+                    entry.emotionName = emotion.name;
+                } catch (e) {
+                    console.log(`Could not fetch emotion for entry ${entry._id}:`, e);
+
+                    // incase it does not get an emotion for some reason
+                    entry.emotionName = 'Unknown';
+                }
+            }
+
+            return res.render("entries/entriesAll", { 
+                showNav: true,
+                pageTitle: "Entries",
+                entries: entryList 
             });
 
         } catch (e) {
@@ -22,7 +40,7 @@ router.route('/')
     })
     .post(async (req, res) => {
         try {
-            let { userId, emotionId, energyId, activities, socials, notes } = req.body;
+            let { userId, title, emotionId, energyId, activities, socials, notes } = req.body;
 
             // makes sure that activites and socials are sent, even if not selected
             if (!Array.isArray(activities)) {
@@ -50,6 +68,7 @@ router.route('/')
             console.log('Received data:', req.body);
 
             validation.checkId(userId, "userId");
+            validation.checkString(title, "title");
             validation.checkId(emotionId, "emotionId");
             validation.checkId(energyId, "energyId");
             for (let i = 0; i < activities.length; i++) {
@@ -63,6 +82,7 @@ router.route('/')
             const newEntry = await entryData.createEntry(
                 userId,
                 new Date(),
+                title,
                 emotionId,
                 energyId,
                 activities,
@@ -87,14 +107,15 @@ router.route('/new')
         try {
             const emotions = await emotionData.getAllEmotions();
             const energies = await energyData.getAllEnergies();
-            const activities = await activityData.getAllActivities();
+            // const activities = await activityData.getAllActivities();
+            const categorizedActivities = await activityData.getActivitiesByCategory();
             const socials = await socialData.getAllSocials();
 
             res.render('entries/entriesNew', {
-                title: 'Create New Entry',
+                pageTitle: 'Create New Entry',
                 emotions,
                 energies,
-                activities,
+                activities: categorizedActivities,
                 socials
             });
         } catch (e) {
@@ -131,9 +152,8 @@ router.route('/:id')
             for (let i = 0; i < singleEntry.socials.length; i++) {
                 socials.push(await socialData.getSocialById(singleEntry.socials[i]));
             }
-
-            return res.render('entries/entriesSingle', {
-                title: "Entry",
+            return res.render('entries/entriesSingle', { 
+                pageTitle: "Entry",
                 entry: singleEntry,
                 emotion,
                 energy,
@@ -165,7 +185,8 @@ router.route('/:id/edit')
 
             const emotions = await emotionData.getAllEmotions();
             const energies = await energyData.getAllEnergies();
-            const activities = await activityData.getAllActivities();
+            // const activities = await activityData.getAllActivities();
+            const categorizedActivities = await activityData.getActivitiesByCategory();
             const socials = await socialData.getAllSocials();
 
             res.render('entries/entriesEdit', {
@@ -173,7 +194,7 @@ router.route('/:id/edit')
                 entry: singleEntry,
                 emotions,
                 energies,
-                activities,
+                activities: categorizedActivities,
                 socials
             });
         } catch (e) {
@@ -186,7 +207,7 @@ router.route('/:id/edit')
     })
     .post(async (req, res) => {
         const entryId = req.params.id;
-        let { userId, emotionId, energyId, activities, socials, notes } = req.body;
+        let { userId, title, emotionId, energyId, activities, socials, notes } = req.body;
 
         //// Testing Only /////
         let allUsers = await userData.getAllUsers();
@@ -210,6 +231,7 @@ router.route('/:id/edit')
 
         try {
             const updateObject = {
+                title,
                 emotionId,
                 energyId,
                 activities,

@@ -20,7 +20,11 @@ app.engine('handlebars', exphbs.engine({
     // formats date to be like 'Monday January 1'
     helpers: {
         formatDate: (date) => {
-            const formats = { weekday: 'long', month: 'long', day: 'numeric' };
+            const formats = { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric' 
+            };
             return new Date(date).toLocaleDateString('en-US', formats);
         }
     }

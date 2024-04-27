@@ -1,44 +1,61 @@
-<h1>{{title}}</h1>
 <form action="/entries" method="POST">
 
     <fieldset>
-        <h2>Emotions:</h2>
+        <h2>Title your entry</h2>
+        <textarea name="title" id="title"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <h2>How do you feel?</h2>
+        <p>Pick the mood that best fits your day.</p>
         <div>
             {{#each emotions}}
             <label>
-                <input type="radio" name="emotionId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
+                <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required>
+                <img src="{{this.iconPath}}" alt="{{this.name}}">
+                <p>{{this.name}}</p>
             </label>
             {{/each}}
         </div>
     </fieldset>
 
     <fieldset>
-        <h2>Energy:</h2>
+        <h2>How about energy?</h2>
+        <p>What's your power level at?</p>
         <div>
             {{#each energies}}
-            <label>
-                <input type="radio" name="energyId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
-            </label>
+            <div>
+                <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required>
+                <label for="energy-{{this.name}}" class="energy-segment" style="background-color: {{this.color}};"></label>
+                <label for="energy-{{this.name}}" class="energy-label">{{this.name}}</label>
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
     <fieldset>
-        <h2>Activities:</h2>
+        <h2>What activities did you do?</h2>
+        <p>Choose as many as you did!</p>
         <div>
             {{#each activities}}
-            <label>
-                <input type="checkbox" name="activities" value="{{this._id}}">
-                <span>{{this.name}}</span>
-            </label>
+            <div id="category-{{@key}}">
+                <h3>{{@key}}</h3>
+                <div>
+                    {{#each this}}
+                    <label>
+                        <input type="checkbox" name="activityIds" value="{{this._id}}">
+                        <span>{{this.name}}</span>
+                    </label>
+                    {{/each}}
+                </div>
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
     <fieldset>
-        <h2>Socials:</h2>
+        <h2>Who shared your day?</h2>
+        <p>If no one, it's alright!</p>
         <div>
             {{#each socials}}
             <label>
@@ -50,7 +67,8 @@
     </fieldset>
 
     <fieldset>
-        <h2>Notes:</h2>
+        <h2>Jot down your day's highlights</h2>
+        <p>Think about what you did...</p>
         <textarea name="notes" id="notes"></textarea>
     </fieldset>
 

@@ -6,12 +6,12 @@ import { dbConnection } from '../config/mongoConnection.js';
 
 // make sure to either run defaults.js if you're doing it this way, else make your own traits
 ///////// EMOTIONS
-const awful = await emotionData.getEmotionByLabel("Awful");
-const bad = await emotionData.getEmotionByLabel("Bad");
-const meh = await emotionData.getEmotionByLabel("Meh");
-const good = await emotionData.getEmotionByLabel("Good");
-const fantastic = await emotionData.getEmotionByLabel("Fantastic");
-const emotionIds = [awful._id.toString(), bad._id.toString(), meh._id.toString(), good._id.toString(), fantastic._id.toString()];
+const annoyed = await emotionData.getEmotionByLabel("Annoyed");
+const unhappy = await emotionData.getEmotionByLabel("Unhappy");
+const content = await emotionData.getEmotionByLabel("Content");
+const pleased = await emotionData.getEmotionByLabel("Pleased");
+const joyful = await emotionData.getEmotionByLabel("Joyful");
+const emotionIds = [annoyed._id.toString(), unhappy._id.toString(), content._id.toString(), pleased._id.toString(), joyful._id.toString()];
 
 ///////// ENERGIES
 const drained = await energyData.getEnergyByLabel("Drained");
@@ -120,6 +120,7 @@ for (let i = 0; i < 40; i++) {
     sampleEntries.push({
         userId: newUser1._id.toString(),
         date: entryDate,
+        title: "Untitled",
         emotionId: emotionIds[getRandomNumber(0, emotionIds.length - 1)],
         energyId: energyIds[getRandomNumber(0, energyIds.length - 1)],
         activities: [activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)]],
@@ -152,6 +153,7 @@ const seedEntries = async () => {
             const createdEntry = await entryData.createEntry(
                 sampleEntry.userId,
                 sampleEntry.date,
+                sampleEntry.title,
                 sampleEntry.emotionId,
                 sampleEntry.energyId,
                 sampleEntry.activities,

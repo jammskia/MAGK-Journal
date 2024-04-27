@@ -1,24 +1,32 @@
-<section id="all_entries">
-    <div class="entry_card" id="newEntry_card">
-        <h3>Create a new entry!</h3>
-        <a href="/entries/new" id="newEntry_button">+</a>
+<section id="entries-all">
+    <div class="greeting">
+        <h1>Hi User,</h1>
+        <p>You haven't made an entry yet!</p>
     </div>
-    
-    <div id="past_entries">
-        <h2>Past Entries:</h2>
+
+    <div id="create-entry">
+        <a href="/entries/new">
+            <div>
+                <h3>Create a New Entry</h3>
+                <p>Write about today's experiences!</p>
+            </div>
+            <p>+</p>
+        </a>
+    </div>
+
+    <div id="past-entries">
+        <h2>Past Entries</h2>
         <ul>
-        {{#each entries}}
-            <li class="entry_card">
-                <h3>{{formatDate this.date}}</h3>
-                <p>{{this.notes}}</p>
+            {{#each entries}}
+            <li class="entry-card {{this.emotionName}}">
                 <div>
-                    <a href="/entries/{{this._id}}">View</a>
-                    <a href="/entries/{{this._id}}/edit">Edit</a>
-                </div>    
+                    <h3>{{this.title}}</h3>
+                    <h4>{{formatDate this.date}}</h4>
+                </div>
+                <p>{{this.notes}}</p>
+                <a href="/entries/{{this._id}}">View</a>
             </li>
-        {{/each}}
+            {{/each}}
         </ul>
     </div>
-    
 </section>
-

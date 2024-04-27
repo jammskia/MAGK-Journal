@@ -10,6 +10,7 @@ const entryDataFunctions = {
     async createEntry(
         userId,
         date,
+        title = "Untitled",
         emotionId,
         energyId,
         activities,
@@ -18,6 +19,7 @@ const entryDataFunctions = {
 
         // validations
         userId = validation.checkId(userId, "userId");
+        title = validation.checkString(title, "title");
         emotionId = validation.checkId(emotionId, "emotionId");
         energyId = validation.checkId(energyId, "energyId");
 
@@ -56,6 +58,7 @@ const entryDataFunctions = {
         let newEntry = {
             _id: entryId,
             userId,
+            title,
             emotionId,
             energyId,
             activities,
@@ -214,6 +217,9 @@ const entryDataFunctions = {
 
         // check fields to update
         let entryUpdate = {};
+        if ('title' in updateObject) {
+            entryUpdate.title = validation.checkString(updateObject.title, "title");
+        }  
         if ('emotionId' in updateObject) {
             entryUpdate.emotionId = validation.checkId(updateObject.emotionId, "emotionId");
         }

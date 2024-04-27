@@ -1,62 +1,52 @@
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>{{pageTitle}}</title>
+        {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
+        
+        {{!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
 
-</html>
 
-<head>
-    <meta charset="utf-8" />
-    <title>{{title}}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../public/css/styles.css" />
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-</head>
+        <link rel="stylesheet" href="../../public/css/styles.css" />
+        <!-- fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
 
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="offcanvas-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-list"
-                    viewBox="0 0 16 16" data-bs-target="#staticBackdrop" data-bs-toggle="offcanvas"
-                    aria-controls="staticBackdrop">
-                    <path fill-rule="evenodd"
-                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                </svg>
-            </div>
-            </div>
-            <a class="navbar-brand" href="/entries">
-                <img class="navbar-logo" src="/public/images/MAGKJournal.png" alt="Logo" class="align-text-center">
-                MAGKJournal
-            </a>
-        </nav>
-    </header>
+    </head>
 
-    <main>
-        <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
-            aria-labelledby="staticBackdropLabel">
-            <div class="offcanvas-header">
-                <button type="button" class="btn-close btn-close-white" style="opacity: 1;" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="list-unstyled">
-                    <li><a class="canvasLink" href="/entries/new">Create Entry</a></li>
-                    <li><a class="canvasLink" href="/entries">Entries</a></li>
-                    <li><a class="canvasLink" href="/moodmeter">Mood Meter</a></li>
-                    <li><a class="canvasLink" href="#">Sign Out</a></li>
+    <body>
+        {{#if showNav}}
+        <div id="nav-container">
+            <nav>
+                <a href="/">
+                    <img class="logo_home" src="../../public/images/logos/iconTransparent.png" alt="MAGK Logo">
+                </a>
+                <ul>
+                    <li>Profile</li>
+                    <li><a href="/entries">Entries</a></li>
+                    <li>Mood Meter</li>
+                    <li>Settings</li>
                 </ul>
-            </div>
+            </nav>
         </div>
-        {{{body}}}
-    </main>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    {{#each jsURLs}}
-    <script src={{this}}></script>
-    {{/each}}
-</body>
+        {{else}}
+        {{/if}}
+        
+        <main>
+            {{{body}}}
+        </main>
 
+
+        {{!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script> --}}
+        {{#each jsURLs}}
+        <script src={{this}}></script>
+        {{/each}}
+        
+    </body>
 </html>
