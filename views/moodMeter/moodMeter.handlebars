@@ -1,0 +1,19 @@
+<section id="moodMeter">
+    <h3 class="fw-bold">{{title}}</h3>
+    <div id="moodMeterContainer" style="visibility: hidden;">
+        <div id="datePickerContainer">
+            <div id="dateInput" class="row justify-content-center align-items-center">
+                <div id="dateInputContainer" class="col-lg-5 col-sm-2 input-container">
+                    <input id="startDate" class="form-control form-control-sm" type="text" readonly>
+                </div>
+                <div id="toText" class="col-sm-1 text-center">To</div>
+                <div id="dateInput" class="col-lg-5 col-sm-2 input-container">
+                    <input id="endDate" class="form-control form-control-sm" type="text" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="chartBox">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+</section>

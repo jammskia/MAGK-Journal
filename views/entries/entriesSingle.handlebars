@@ -18,23 +18,23 @@
     </ul>
 
     <h4>Socials:</h3>
-    <ul>
-        {{#each socials}}
-        <li>{{this.name}}</li>
-        {{else}}
-        <li>No social interactions</li>
-        {{/each}}
-    </ul>
+        <ul>
+            {{#each socials}}
+            <li>{{this.name}}</li>
+            {{else}}
+            <li>No social interactions</li>
+            {{/each}}
+        </ul>
 
-    <!-- button to edit -->
-    <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
+        <!-- button to edit -->
+        <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
 
-    <!-- button to delete -->
-    <form action="/entries/{{entry._id}}/delete" method="POST">
-        <input type="hidden" name="userId" value="{{entry.userId}}">
-        <button type="submit">Delete Entry</button>
-    </form>
+        <!-- button to delete -->
+        <form action="/entries/{{entry._id}}/delete" method="POST">
+            <input type="hidden" name="userId" value="{{entry.userId}}">
+            <button type="submit">Delete Entry</button>
+        </form>
 
 
-    <button><a href="/entries">Back to all Entries</a></button>
+        <button><a href="/entries">Back to all Entries</a></button>
 </section>

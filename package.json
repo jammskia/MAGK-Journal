@@ -14,8 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
-    "mongodb": "^6.5.0"
+    "moment": "^2.30.1",
+    "mongodb": "^6.5.0",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
   }
 }

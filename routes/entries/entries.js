@@ -7,18 +7,18 @@ router.route('/')
     .get(async (req, res) => {
         try {
             const entryList = await entryData.getAllEntries();
-            return res.render("entries/entriesAll", { 
+            return res.render("entries/entriesAll", {
                 title: "Entries",
-                entries: entryList 
+                entries: entryList
             });
-            
+
         } catch (e) {
             console.log('Error fetching all entries:', e);
-            return res.status(500).render('errorPage', { 
+            return res.status(500).render('errorPage', {
                 status: '500',
                 error: 'Failed to fetch all entries.'
             });
-        }    
+        }
     })
     .post(async (req, res) => {
         try {
@@ -29,7 +29,7 @@ router.route('/')
                 // if only one is sent, wrap it around since it would be a string
                 if (activities) {
                     activities = [activities];
-                // if nothing is selected, make sure it is still an empty array, since it would be undefined
+                    // if nothing is selected, make sure it is still an empty array, since it would be undefined
                 } else {
                     activities = []
                 }
@@ -57,6 +57,7 @@ router.route('/')
 
             const newEntry = await entryData.createEntry(
                 userId,
+                new Date(),
                 emotionId,
                 energyId,
                 activities,
@@ -67,11 +68,11 @@ router.route('/')
 
         } catch (e) {
             console.log('Failed to create entry:', e);
-            return res.status(400).render('errorPage', { 
+            return res.status(400).render('errorPage', {
                 status: '400',
                 error: 'Failed to create entry.'
             });
-            
+
         }
     });
 
@@ -93,7 +94,7 @@ router.route('/new')
             });
         } catch (e) {
             console.log('Error displaying new entry form:', e);
-            res.status(500).render('errorPage', { 
+            res.status(500).render('errorPage', {
                 status: '500',
                 error: 'Failed to load new entry form.'
             });
@@ -108,9 +109,9 @@ router.route('/:id')
 
             const singleEntry = await entryData.getEntryById(entryId);
             if (!singleEntry) {
-                return res.status(404).render('errorPage', { 
+                return res.status(404).render('errorPage', {
                     status: '404',
-                    error: `Entry [${entryId}] not found` 
+                    error: `Entry [${entryId}] not found`
                 });
             }
 
@@ -126,7 +127,7 @@ router.route('/:id')
                 socials.push(await socialData.getSocialById(singleEntry.socials[i]));
             }
 
-            return res.render('entries/entriesSingle', { 
+            return res.render('entries/entriesSingle', {
                 title: "Entry",
                 entry: singleEntry,
                 emotion,
@@ -137,9 +138,9 @@ router.route('/:id')
 
         } catch (e) {
             console.log('Error fetching entry:', e);
-            return res.status(500).render('errorPage', { 
+            return res.status(500).render('errorPage', {
                 status: '500',
-                error: 'Error fetching entry.' 
+                error: 'Error fetching entry.'
             });
         }
     });
@@ -233,5 +234,5 @@ router.route('/:id/delete')
             });
         }
     });
-    
+
 export default router;

@@ -1,24 +1,32 @@
 import { activities, socials, emotions, energies } from '../config/mongoCollections.js';
-import { activityData, socialData, emotionData, energyData   } from '../data/dataIndex.js';
+import { activityData, socialData, emotionData, energyData } from '../data/dataIndex.js';
 import { dbConnection } from '../config/mongoConnection.js';
 
 const initDefaults = async () => {
     try {
         console.log("Initializing emotions...");
-        await emotionData.createEmotion("Annoyed", "/icons/emotions/miserable.png", 1);
-        await emotionData.createEmotion("Unhappy", "/icons/emotions/unhappy.png", 2);
-        await emotionData.createEmotion("Content", "/icons/emotions/content.png", 3);
-        await emotionData.createEmotion("Pleased","/icons/emotions/great.png", 4);
-        await emotionData.createEmotion("Joyful", "/icons/emotions/joyful.png", 5);
+        await emotionData.createEmotion("Fantastic", "/public/images/FantasticEmoji.png", 1);
+        await emotionData.createEmotion("Good", "/public/images/GoodEmoji.png", 2);
+        await emotionData.createEmotion("Meh", "/public/images/MehEmoji.png", 3);
+        await emotionData.createEmotion("Bad", "/public/images/BadEmoji.png", 4);
+        await emotionData.createEmotion("Awful", "/public/images/AwfulEmoji.png", 5);
 
         console.log("Initializing activities...");
-        await activityData.createActivity("Jogging", "/icons/activities/jogging.png", ["Physical", "Outdoor"]);
-        await activityData.createActivity("Gym", "/icons/activities/gym.png", ["Physical"]);
-        await activityData.createActivity("Homework", "/icons/activities/homework.png", ["Indoor", "School"]);
+        await activityData.createActivity("Cooking", "/icons/activities/Cooking.png", ["Indoor"]);
+        await activityData.createActivity("Sports", "/icons/activities/Sports.png", ["Outdoor", "Physical", "Fun"]);
+        await activityData.createActivity("Video Games", "/icons/activities/VideoGames.png", ["Entertainment", "Fun"]);
+        await activityData.createActivity("Chores", "/icons/activities/Chores.png", ["Tasks"]);
+        await activityData.createActivity("Cleaning", "/icons/activities/Cleaning.png", ["Tasks"]);
+        await activityData.createActivity("Shopping", "/icons/activities/Shopping.png", ["Fun"]);
+        await activityData.createActivity("Exercising", "/icons/activities/Exercising.png", ["Physical"]);
+        await activityData.createActivity("Homework", "/icons/activities/Homework.png", ["Indoor", "School"]);
+        await activityData.createActivity("Reading", "/icons/activities/Reading.png", ["Indoor"]);
+        await activityData.createActivity("Painting/Drawing", "/icons/activities/Painting_Drawing.png", ["Indoor"]);
+        await activityData.createActivity("Swimming", "/icons/activities/Swimming.png", ["Physical", "Fun"]);
 
         console.log("Initializing socials...");
-        await socialData.createSocial("Friends", "/icons/socials/friends.png");
-        await socialData.createSocial("Family", "/icons/socials/family.png");
+        await socialData.createSocial("Friends", "/icons/socials/Friends.png");
+        await socialData.createSocial("Family", "/icons/socials/Family.png");
 
         console.log("Initializing energies...");
         await energyData.createEnergy("Drained", "/icons/energies/exhausted.png", 1);
