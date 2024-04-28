@@ -17,8 +17,9 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.engine('handlebars', exphbs.engine({
     defaultLayout: 'main',
 
-    // formats date to be like 'Monday January 1'
+    
     helpers: {
+        // formats date to be like 'Monday January 1'
         formatDate: (date) => {
             const formats = { 
                 weekday: 'long', 
@@ -26,6 +27,30 @@ app.engine('handlebars', exphbs.engine({
                 day: 'numeric' 
             };
             return new Date(date).toLocaleDateString('en-US', formats);
+        },
+
+        // for emotion and energy prefilling
+        equals: (arg1, arg2) => {
+            if (arg1.toString() === arg2.toString()) {
+                return 'checked';
+            }
+            return '';
+        },
+
+        // for activities and socials prefilling
+        includes: (arr, value) => {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].toString() === value.toString()) {
+                    return 'checked';
+                }
+            }
+            return '';
+        },
+        
+        // for testing, 
+        // ex: {{log entry.notes}} in handlebars for example
+        log: (value) => {
+            console.log(value);
         }
     }
 }));

@@ -3,7 +3,7 @@
 
     <fieldset>
         <h2>Title your entry</h2>
-        <textarea name="title" id="title"></textarea>
+        <textarea name="title" id="title">{{entry.title}}</textarea>
     </fieldset>
 
     <fieldset>
@@ -12,7 +12,14 @@
         <div>
             {{#each emotions}}
             <label>
-                <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required>
+                {{!-- 
+
+                ../ to access a "higher level," meaning out of the each block 
+                when you don't have ../, entry.emotionId is undefined since handlebars can't reach it for some reason
+
+                --}}
+                <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required
+                    {{equals this._id ../entry.emotionId}}>
                 <img src="{{this.iconPath}}" alt="{{this.name}}">
                 <p>{{this.name}}</p>
             </label>
@@ -26,7 +33,9 @@
         <div>
             {{#each energies}}
             <div>
-                <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required>
+                <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required
+                    {{equals this._id ../entry.energyId}}>
+
                 <label for="energy-{{this.name}}" class="energy-segment" style="background-color: {{this.color}};"></label>
                 <label for="energy-{{this.name}}" class="energy-label">{{this.name}}</label>
             </div>
@@ -44,7 +53,8 @@
                 <div>
                     {{#each this}}
                     <label>
-                        <input type="checkbox" name="activities[]" value="{{this._id}}">
+                        <input type="checkbox" name="activities[]" value="{{this._id}}" 
+                        {{includes ../../entry.activities this._id}}>
                         <span>{{this.name}}</span>
                     </label>
                     {{/each}}
@@ -60,7 +70,8 @@
         <div>
             {{#each socials}}
             <label>
-                <input type="checkbox" name="socials" value="{{this._id}}">
+                <input type="checkbox" name="socials" value="{{this._id}}"
+                {{includes ../entry.socials this._id}}>
                 <span>{{this.name}}</span>
             </label>
             {{/each}}
@@ -70,7 +81,7 @@
     <fieldset>
         <h2>Jot down your day's highlights</h2>
         <p>Think about what you did...</p>
-        <textarea name="notes" id="notes"></textarea>
+        <textarea name="notes" id="notes">{{entry.notes}}</textarea>
     </fieldset>
 
     <button type="submit">Submit Entry</button>
