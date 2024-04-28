@@ -66,9 +66,14 @@ router.route('/')
             //// Testing Only /////
 
             console.log('Received data:', req.body);
-
             validation.checkId(userId, "userId");
-            validation.checkString(title, "title");
+
+            if (title) {
+                validation.checkString(title, "title", 0);
+            } else {
+                title = 'Untitled';
+            }
+
             validation.checkId(emotionId, "emotionId");
             validation.checkId(energyId, "energyId");
             for (let i = 0; i < activities.length; i++) {
@@ -77,8 +82,8 @@ router.route('/')
             for (let i = 0; i < socials.length; i++) {
                 validation.checkId(socials[i], "socialId");
             }
-            validation.checkString(notes, "notes", 0)
-
+            validation.checkString(notes, "notes", 0);
+            
             const newEntry = await entryData.createEntry(
                 userId,
                 new Date(),
@@ -190,7 +195,7 @@ router.route('/:id/edit')
             const socials = await socialData.getAllSocials();
 
             res.render('entries/entriesEdit', {
-                title: 'Edit Entry',
+                pageTitle: 'Edit Entry',
                 entry: singleEntry,
                 emotions,
                 energies,
@@ -229,6 +234,16 @@ router.route('/:id/edit')
             }
         }
 
+        if (title) {
+            validation.checkString(title, "title", 0);
+        } else {
+            title = 'Untitled';
+        }
+
+        if (!notes) {
+            notes = 'No notes provided...';
+        }
+
         try {
             const updateObject = {
                 title,
@@ -240,7 +255,7 @@ router.route('/:id/edit')
             };
 
             const updatedEntry = await entryData.updateEntry(userId, entryId, updateObject);
-            return res.redirect(`entries/${entryId}`);
+            return res.redirect(`/entries/${updatedEntry._id}`);
         } catch (e) {
             console.log('Failed to update entry:', e);
             res.status(400).render('errorPage', {

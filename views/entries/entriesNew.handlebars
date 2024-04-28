@@ -43,7 +43,7 @@
                 <div>
                     {{#each this}}
                     <label>
-                        <input type="checkbox" name="activityIds" value="{{this._id}}">
+                        <input type="checkbox" name="activities[]" value="{{this._id}}">
                         <span>{{this.name}}</span>
                     </label>
                     {{/each}}

@@ -15,11 +15,12 @@ const entryDataFunctions = {
         energyId,
         activities,
         socials,
-        notes) {
+        notes = "No notes provided...") {
 
         // validations
         userId = validation.checkId(userId, "userId");
-        title = validation.checkString(title, "title");
+
+        if (title) { title = validation.checkString(title, "title", 0); }
         emotionId = validation.checkId(emotionId, "emotionId");
         energyId = validation.checkId(energyId, "energyId");
 
@@ -254,7 +255,6 @@ const entryDataFunctions = {
             // returns updated entry instead of return info
             { returnDocument: 'after' }
         );
-
         return updatedEntry;
     },
 

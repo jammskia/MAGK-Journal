@@ -1,4 +1,4 @@
-<h1>{{title}} for {{formatDate entry.date}}</h1>
+<h1>Edit Entry from {{formatDate entry.date}}</h1>
 <form action="/entries/{{entry._id}}/edit" method="POST">
 
     <fieldset>
@@ -44,7 +44,7 @@
                 <div>
                     {{#each this}}
                     <label>
-                        <input type="checkbox" name="activityIds" value="{{this._id}}">
+                        <input type="checkbox" name="activities[]" value="{{this._id}}">
                         <span>{{this.name}}</span>
                     </label>
                     {{/each}}
