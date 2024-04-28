@@ -25,7 +25,6 @@ router.route('/')
             }
 
             return res.render("entries/entriesAll", { 
-                showNav: true,
                 pageTitle: "Entries",
                 entries: entryList 
             });

@@ -6,8 +6,10 @@
     </fieldset>
 
     <fieldset>
-        <h2>How do you feel?</h2>
-        <p>Pick the mood that best fits your day.</p>
+        <header>
+            <h2>How do you feel?</h2>
+            <p>Pick the mood that best fits your day.</p>
+        </header>
         <div>
             {{#each emotions}}
             <label>
@@ -20,8 +22,10 @@
     </fieldset>
 
     <fieldset>
-        <h2>How about energy?</h2>
-        <p>What's your power level at?</p>
+        <header>
+            <h2>How about energy?</h2>
+            <p>What's your power level at?</p>
+        </header>
         <div>
             {{#each energies}}
             <div>
@@ -34,8 +38,10 @@
     </fieldset>
 
     <fieldset>
-        <h2>What activities did you do?</h2>
-        <p>Choose as many as you did!</p>
+        <header>
+            <h2>What activities did you do?</h2>
+            <p>Choose as many as you did!</p>
+        </header>
         <div>
             {{#each activities}}
             <div id="category-{{@key}}">
@@ -54,8 +60,10 @@
     </fieldset>
 
     <fieldset>
-        <h2>Who shared your day?</h2>
-        <p>If no one, it's alright!</p>
+        <header>
+            <h2>Who shared your day?</h2>
+            <p>If no one, it's alright!</p>
+        </header>
         <div>
             {{#each socials}}
             <label>
@@ -67,8 +75,10 @@
     </fieldset>
 
     <fieldset>
-        <h2>Jot down your day's highlights</h2>
-        <p>Think about what you did...</p>
+        <header>
+            <h2>Jot down your day's highlights</h2>
+            <p>Think about what you did...</p>
+        </header>
         <textarea name="notes" id="notes"></textarea>
     </fieldset>
 
