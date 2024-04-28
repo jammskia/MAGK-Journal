@@ -15,6 +15,7 @@
     </div>
 
     <div id="past-entries">
+        {{#if entries}}
         <h2>Past Entries</h2>
         <ul>
             {{#each entries}}
@@ -23,10 +24,14 @@
                     <h3>{{this.title}}</h3>
                     <h4>{{formatDate this.date}}</h4>
                 </div>
-                <p>{{this.notes}}</p>
+                <p class="notes">{{this.notes}}</p>
                 <a href="/entries/{{this._id}}">View</a>
             </li>
             {{/each}}
         </ul>
+        {{else}}
+        <h3>No entries yet!</h3>
+        <p>Create one above.</p>
+        {{/if}}
     </div>
 </section>

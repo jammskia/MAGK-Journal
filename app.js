@@ -46,6 +46,15 @@ app.engine('handlebars', exphbs.engine({
             }
             return '';
         },
+
+        // for the singlepage energy bar
+        // calculates up to what level the bar should be filled depened on the energy value
+        energyLevel: (value, index) => {
+            if (index + 1 <= value) { // + 1 because of indexing
+                return 'filled';
+            }
+            return '';
+        },
         
         // for testing, 
         // ex: {{log entry.notes}} in handlebars for example

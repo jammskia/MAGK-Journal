@@ -1,18 +1,17 @@
 * {
     margin: 0;
     padding: 0;
+
+    font-family: Lexend, sans-serif;
 }
 
 html {
-    font-family: Lexend, sans-serif;
-
-    background-color: #130F30;
+    background-color: #EFECFF;
 }
-
+    
 /* 
     font-family: Arial, Helvetica, sans-serif;
 }
-
 
 header {
     width: 100%;
@@ -25,31 +24,31 @@ header {
     padding-left: 10px;
     cursor: pointer;
 }
-
+    
 .navbar {
     height: 70px;
     background-color: black;
     padding-top: 0px;
     justify-content: left;
 }
-  
+      
 .navbar-logo {
     height: 70px;
     padding: 0px;
     margin-top: 0px;
 }
-
+    
 .canvasLink {
     color: white;
     font-weight: bold;
     font-size: 20px;
     text-decoration: none;
 }
-
+    
 .offcanvas {
     background-color: black;
 }
-
+    
 .navbar-brand {
     color: white;
     align-items: center;
@@ -58,16 +57,15 @@ header {
     font-weight: bold;
     font-size: 25px;
 }
-
+    
 .navbar-brand:hover {
     color: #fff;
 }
-
+    
 nav li {
     padding: 10px 15px;
 } */
-
-
+    
 body {
     display: flex;
     min-height: 100vh;
@@ -79,10 +77,18 @@ main {
 
 /* ################### nav bar ################### */
 #nav-container {
-    display: flex;
+    position: sticky;
 
-    width: 275px;
-    background-color: #EFECFF;
+    width: 20%; 
+    height: 80vh;
+    margin: 50px;
+    top: 10%;
+
+    background-color: #130F30;
+
+    border-radius: 10px;
+
+    color: #ffffff;
 }
 
 nav {
@@ -90,8 +96,8 @@ nav {
     flex-direction: column; 
     align-items: center; 
 
-    min-width: 70%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
 
     margin: auto;
 
@@ -162,7 +168,7 @@ main {
     border-radius: 8px;
 
     background-color: #9F8BFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
 
     text-decoration: none;
     color: #ffffff;
@@ -191,7 +197,7 @@ main {
 
 
     border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 #past-entries h2 {
@@ -207,6 +213,8 @@ main {
     justify-content: center;
 
     margin: 10px;
+
+    gap: 40px;
 }
 
 .entry-card {
@@ -223,14 +231,12 @@ main {
 
     padding: 15px;
 
-    box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-
-    text-align: center;
 }
 
 .entry-card:hover {
-    box-shadow:10px 10px 7px rgba(0, 0, 0, .5);
+    box-shadow: 10px 10px 2px rgba(0, 0, 0, .5);
     transform: scale(1.1); 
 }
 
@@ -238,8 +244,16 @@ main {
     font-weight: normal;
 }
 
-.entry-card p {
+.entry-card .notes {
     color: #545454;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .entry-card a {
@@ -247,6 +261,7 @@ main {
 
     padding: 10px;
 
+    text-align: center;
     text-decoration: none;
     color: #130F30;
 
@@ -293,18 +308,22 @@ main {
     background-color: #ffffff;
 
     position: relative;
-    width: 500px;
+    width: 600px;
     margin: auto;
 
     border-radius: 12px;
-    box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
+#entries-single p {
+    color: #545454;
+}
 
+/* emotion */
 #emotion-circle {
     position: absolute;
-    top: -20%;
-    left: 5%;
+    top: -5%;
+    left: 8%;
     z-index: 10;
 }
 
@@ -318,20 +337,20 @@ main {
 
     border: 3px solid #ffffff;
     border-radius: 50%;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* energy */
 #energy-bar {
     position: absolute;
-    top: -10%;
-    left: 30%;
+    top: 3%;
+    left: 28%;
     right: 0;
 
     height: 50px;
-    width: 290px;
+    width: 300px;
 
-    padding-left: 6%;
-
+    padding-left: 8%;
 
     display: flex;
     align-items: center;
@@ -339,7 +358,7 @@ main {
     background-color: #ffffff;
 
     border-radius: 0px 50px 50px 0px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 3px 5px 3px rgba(0, 0, 0, 0.3);
 }
 
 .energy-indicator {
@@ -350,8 +369,144 @@ main {
 
     background-color: #ccc;
 
-    box-shadow: inset 3px 3px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
 }
+
+.energy-indicator.filled {
+    background-image: linear-gradient(to right, #ffa502 , #ffde21);
+}
+
+/* this is for an alternative where each indicator has its own colour rather than having the bar all yellow for example */
+/* .energy-indicator.filled.darkBlue {
+    background-color: #476CED;
+}
+
+.energy-indicator.filled.lightBlue {
+    background-color: #90A5ED;
+}
+
+.energy-indicator.filled.neutral {
+    background-color: #EBEBEB;
+}
+
+.energy-indicator.filled.lightYellow {
+    background-color: #EAEBCF;
+}
+
+.energy-indicator.filled.Yellow {
+    background-color: #F1F29D;
+} */
+
+#energy-bar p {
+    font-weight: bold;
+    font-size: 0.8em;
+
+    padding: 10px;
+}
+
+/* heading */
+#entries-single > div {
+    padding-top: 20%;
+}
+
+#entries-single h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+#entry-dates {
+    text-align: center;
+    font-size: 14px;
+}
+
+#entries-single .notes {
+    padding: 0px 8%;
+    margin: 20px 0px;
+
+    color: #545454;
+}
+
+/* activities and socials */
+.socact-container {
+    padding: 0px 8%
+}
+
+.socact-container ul {
+    list-style-type: none;
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 20px;
+    margin: 10px auto;
+
+    background-color: #EFECFF;
+
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.4);
+}
+
+.socact-container ul li {
+    padding: 10px;
+    margin: 10px;
+
+    background-color: #ffffff;
+
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* edit and delete buttons */
+#entry-buttons {
+    text-align: center;
+
+    display: flex;
+}
+
+#entry-buttons > div, #entry-buttons form {
+    display: block;
+    align-content: center;
+
+    font-size: 14px;
+
+    width: 50%;
+    height: 3em;
+    margin: 20px;
+}
+
+#entry-buttons a, #entry-buttons button {
+    padding: 10px 80px;
+    
+    border-radius: 8px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+
+    transition: background-color 0.3s ease;
+}
+
+#entry-buttons a {
+    background-color: #49A1F1;
+
+    text-decoration: none;
+    color: black;
+}
+
+#entry-buttons a:hover {
+    background-color: #65aff3;
+}
+
+#entry-buttons button {
+    background-color: #F68181;
+}
+
+#entry-buttons button:hover {
+    background-color: #f5a1a1;
+}
+
+
 
 /* ///////////////////////// moodMeter ///////////////////////// */
 

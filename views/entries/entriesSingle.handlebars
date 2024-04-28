@@ -6,49 +6,59 @@
                     <img src="{{emotion.iconPath}}">
                 </div>
                 <div id="energy-bar">
-                    <span class="energy-indicator"></span>
-                    <span class="energy-indicator"></span>
-                    <span class="energy-indicator"></span>
-                    <span class="energy-indicator"></span>
-                    <span class="energy-indicator"></span>
+                    {{#each defaultEnergies}}
+                    <span class="energy-indicator {{energyLevel ../energy.value @index}}"></span>
+
+                    {{!-- 
+                    basically, this alternative is so that each indicator has its own color rather than one cohesive colour throughout the bar 
+                    this goes hand in hand with the segment in the CSS
+                    --}}
+                    {{!-- <span class="energy-indicator {{energyLevel ../energy.value @index}} {{this.color}}"></span> --}}
+                    
+                    {{/each}}
+                    <p>{{energy.name}}</p>
                 </div>
             </header>
              
-            <h1>{{entry.title}}</h1>
-            <div id="entry-dates">
-                <h4>{{formatDate entry.date}}</h4>
-                {{#if entry.updatedOn}}
-                <h4>Updated on: {{formatDate entry.updatedOn}}</h4>
-                {{/if}}
-            </div>
-            <p>{{entry.notes}}</p>
+            <div>
+                <h1>{{entry.title}}</h1>
+                <div id="entry-dates">
+                    <h4>{{formatDate entry.date}}</h4>
+                    {{#if entry.updatedOn}}
+                    <h4>Updated on: {{formatDate entry.updatedOn}}</h4>
+                    {{/if}}
+                </div>
+                <p class="notes">{{entry.notes}}</p>
 
-            <div>
-                <h2>Activities</h2>
-                <ul>
-                    {{#each activities}}
-                    <li>{{this.name}}</li>
-                    {{else}}
-                    <li>No activities</li>
-                    {{/each}}
-                </ul>
-            </div>
-            <div>
-                <h2>Socials</h2>
-                <ul>
-                    {{#each socials}}
-                    <li>{{this.name}}</li>
-                    {{else}}
-                    <li>No social interactions</li>
-                    {{/each}}
-                </ul>
-            </div>
+                <div class="socact-container">
+                    <h2>Activities</h2>
+                    <ul>
+                        {{#each activities}}
+                        <li>{{this.name}}</li>
+                        {{else}}
+                        <li>No activities</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="socact-container">
+                    <h2>Socials</h2>
+                    <ul>
+                        {{#each socials}}
+                        <li>{{this.name}}</li>
+                        {{else}}
+                        <li>No social interactions</li>
+                        {{/each}}
+                    </ul>
+                </div>
 
-            <div>
-                <button><a href="/entries/{{entry._id}}/edit">Edit Entry</a></button>
-                <form action="/entries/{{entry._id}}/delete" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
+                <div id="entry-buttons">
+                    <div>
+                        <a href="/entries/{{entry._id}}/edit">Edit</a>
+                    </div>
+                    <form action="/entries/{{entry._id}}/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
             </div>
         </section>  
     </div>

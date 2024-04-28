@@ -149,6 +149,7 @@ router.route('/:id')
             // get the traits
             const emotion = await emotionData.getEmotionById(singleEntry.emotionId);
             const energy = await energyData.getEnergyById(singleEntry.energyId);
+            const defaultEnergies = await energyData.getAllEnergies();
             const activities = [];
             for (let i = 0; i < singleEntry.activities.length; i++) {
                 activities.push(await activityData.getActivityById(singleEntry.activities[i].toString()));
@@ -162,6 +163,7 @@ router.route('/:id')
                 entry: singleEntry,
                 emotion,
                 energy,
+                defaultEnergies,
                 activities,
                 socials
             });
