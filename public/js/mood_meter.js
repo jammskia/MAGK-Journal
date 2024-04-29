@@ -2,6 +2,10 @@ let moodIcons = [];
 let moodLabels = []
 
 let myChart = null;
+const moodImageWidth = 30;
+const chartBottomPadding = 20;
+const moodImageHeight = 30;
+let moodMeterData = null;
 
 let averageEmotionElement = document.getElementById("averageEmotion");
 let startDateCalendarIcon = document.querySelector("#startDateInput .calendarIcon svg");
@@ -153,7 +157,7 @@ function fetchEmotionsData(startDate, endDate, shouldUpdate) {
         let data = apiResponse;
         moodIcons = data.allEmotionValues.map((emotion) => emotion.iconPath);
         moodLabels = data.allEmotionValues.map((emotion) => emotion.name);
-        let moodMeterData = data.moodMeter;
+        moodMeterData = data.moodMeter;
 
         let startDate = new Date(moodMeterData[0].date);
         let endDate = new Date(moodMeterData[moodMeterData.length - 1].date);
@@ -282,6 +286,27 @@ function fetchEmotionsData(startDate, endDate, shouldUpdate) {
         let thirdActivityCountElement = document.querySelector("#thirdActivity .activityCount");
         thirdActivityCountElement.textContent = data.topThreeActivities[2].count;
 
+        const yAxisImagesPlugin = {
+            id: 'yAxisImagesPlugin',
+            beforeDatasetsDraw: function (chart) {
+                const { ctx, data, options, scales: { x, y } } = chart;
+                ctx.save();
+                ctx.imageSmoothingQuality = 'high';
+                const imageSize = options.layout.padding.left
+                data.datasets[0].image.forEach((imageLink, index) => {
+                    const logo = new Image();
+                    logo.src = imageLink;
+                    if (moodMeterData.length <= 7) {
+                        ctx.drawImage(logo, moodImageWidth + 35, y.getPixelForValue(index) - chartBottomPadding - moodImageWidth - 35, moodImageWidth, moodImageHeight);
+                    } else {
+                        ctx.drawImage(logo, moodImageWidth + 35, y.getPixelForValue(index) - chartBottomPadding - moodImageWidth - 25, moodImageWidth, moodImageHeight)
+                    }
+                })
+            }
+        }
+
+        Chart.register(yAxisImagesPlugin);
+
         if (shouldUpdate) {
             myChart.data.labels = moodMeterData.map(row => row.date);
             myChart.data.datasets[0].data = moodMeterData.map(row => row.emotion);
@@ -290,28 +315,11 @@ function fetchEmotionsData(startDate, endDate, shouldUpdate) {
             buildGraph(moodMeterData);
         }
         moodMeterWrapper.style.visibility = "visible";
+
     });
 }
 
 function buildGraph(data) {
-    const chartBottomPadding = 20;
-    const moodImageWidth = 30;
-    const moodImageHeight = 30;
-
-    const yAxisImagesPlugin = {
-        id: 'yAxisImagesPlugin',
-        beforeDatasetsDraw: function (chart) {
-            const { ctx, data, options, scales: { x, y } } = chart;
-            ctx.save();
-            ctx.imageSmoothingQuality = 'high';
-            const imageSize = options.layout.padding.left
-            data.datasets[0].image.forEach((imageLink, index) => {
-                const logo = new Image();
-                logo.src = imageLink;
-                ctx.drawImage(logo, moodImageWidth + 35, y.getPixelForValue(index) - chartBottomPadding - moodImageWidth - 50, moodImageWidth, moodImageHeight)
-            })
-        }
-    }
 
     const bottomChartBorderPlugin = {
         id: 'bottomChartBorderPlugin',
@@ -345,7 +353,6 @@ function buildGraph(data) {
         }
     }
 
-    Chart.register(yAxisImagesPlugin);
     Chart.register(bottomChartBorderPlugin);
     Chart.register(topChartBorderPlugin);
 
@@ -409,7 +416,7 @@ function buildGraph(data) {
                         color: 'rgba(255, 255, 255, 0.5)'
                     },
                     ticks: {
-                        padding: 15,
+                        padding: 10,
                         color: 'white',
                         font: {
                             size: 18,
