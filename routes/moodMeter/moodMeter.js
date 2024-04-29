@@ -8,8 +8,6 @@ router.route('/')
         try {
             return res.render("moodMeter/moodMeter", {
                 title: "Mood Meter",
-                showNav: true,
-                enableJquery: true,
                 jsURLs: ['public/js/mood_meter.js', `https://cdn.jsdelivr.net/npm/chart.js`]
             });
 
