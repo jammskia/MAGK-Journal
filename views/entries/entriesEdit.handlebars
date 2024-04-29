@@ -1,14 +1,18 @@
 <h1>Edit Entry from {{formatDate entry.date}}</h1>
-<form action="/entries/{{entry._id}}/edit" method="POST">
+<form action="/entries/{{entry._id}}/edit" method="POST" class="entry-form">
 
-    <fieldset>
-        <h2>Title your entry</h2>
+    <fieldset class="title">
+        <header>
+            <h2>Title your entry</h2>
+        </header>
         <textarea name="title" id="title">{{entry.title}}</textarea>
     </fieldset>
 
-    <fieldset>
-        <h2>How do you feel?</h2>
-        <p>Pick the mood that best fits your day.</p>
+    <fieldset class="emotions">
+        <header>
+            <h2>How do you feel?</h2>
+            <p>Pick the mood that best fits your day.</p>
+        </header>
         <div>
             {{#each emotions}}
             <label>
@@ -27,62 +31,73 @@
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>How about energy?</h2>
-        <p>What's your power level at?</p>
+    <fieldset class="energy">
+        <header>
+            <h2>How about energy?</h2>
+            <p>What's your power level at?</p>
+        </header>
         <div>
             {{#each energies}}
             <div>
-                <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required
-                    {{equals this._id ../entry.energyId}}>
-
-                <label for="energy-{{this.name}}" class="energy-segment" style="background-color: {{this.color}};"></label>
-                <label for="energy-{{this.name}}" class="energy-label">{{this.name}}</label>
+                <label>
+                    <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required hidden
+                        {{equals this._id ../entry.energyId}}>
+                    <span id="energy-{{this.name}}-bar" class="energy-box"></span>
+                    <p>{{this.name}}</p>
+                </label>
             </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>What activities did you do?</h2>
-        <p>Choose as many as you did!</p>
+    <fieldset class="socact">
+        <header>
+            <h2>What activities did you do?</h2>
+            <p>Choose as many as you did!</p>
+        </header>
         <div>
             {{#each activities}}
-            <div id="category-{{@key}}">
+            <div class="socact-category">
                 <h3>{{@key}}</h3>
-                <div>
+                <div id="category-{{@key}}">
                     {{#each this}}
                     <label>
-                        <input type="checkbox" name="activities[]" value="{{this._id}}" 
-                        {{includes ../../entry.activities this._id}}>
+                        <input type="checkbox" name="activities[]" value="{{this._id}}"
+                            {{includes ../../entry.activities this._id}}>
                         <span>{{this.name}}</span>
                     </label>
                     {{/each}}
-                </div>
+                </div>   
             </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Who shared your day?</h2>
-        <p>If no one, it's alright!</p>
-        <div>
+    <fieldset class="socact">
+        <header>
+            <h2>Who shared your day?</h2>
+            <p>If no one, it's alright!</p>
+        </header>
+        <div class="socact-category">
+            <div>
             {{#each socials}}
-            <label>
-                <input type="checkbox" name="socials" value="{{this._id}}"
-                {{includes ../entry.socials this._id}}>
-                <span>{{this.name}}</span>
-            </label>
+                <label>
+                    <input type="checkbox" name="socials" value="{{this._id}}"
+                        {{includes ../entry.socials this._id}}>
+                    <span>{{this.name}}</span>
+                </label>
             {{/each}}
+            </div>
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Jot down your day's highlights</h2>
-        <p>Think about what you did...</p>
+    <fieldset class="notes">
+        <header>
+            <h2>Jot down your day's highlights</h2>
+            <p>Think about what you did...</p>
+        </header>
         <textarea name="notes" id="notes">{{entry.notes}}</textarea>
     </fieldset>
 
-    <button type="submit">Submit Entry</button>
+    <button type="submit">Confirm Edit</button>
 </form>

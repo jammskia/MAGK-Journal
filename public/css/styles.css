@@ -233,7 +233,7 @@ nav ul li a {
     padding: 15px;
 
     box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .entry-card:hover {
@@ -299,10 +299,6 @@ nav ul li a {
     align-content: center;
 }
 
-.main-container > div {
-
-}
-
 #entries-single {
     background-color: #ffffff;
 
@@ -366,7 +362,7 @@ nav ul li a {
 
     margin-right: 1%;
 
-    background-color: #ccc;
+    background-color: #cccccc;
 
     box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
 }
@@ -505,7 +501,246 @@ nav ul li a {
     background-color: #f5a1a1;
 }
 
-/* ################### entriesSingle ################### */
+/* ################### entriesNew/Edit ################### */
+form {
+    margin: 2% auto;
+}
+
+fieldset {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 20px;
+
+    background-color: #ffffff;
+
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+fieldset header {
+    margin-bottom: 25px;
+}
+
+fieldset header p {
+    color: #545454;
+}
+
+fieldset > div p {
+    text-align: center;
+    color: #545454;
+
+    margin-top: 15px;
+
+    transition: font-weight 0.2s ease;
+}
+
+fieldset.emotions input[type="radio"]:checked + img + p, fieldset.energy > div input[type="radio"]:checked + span + p  {
+    font-weight: bold;
+}
+
+/* title + notes */
+fieldset.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+textarea {
+    padding: 10px;
+
+    border: 1px solid #130F30;
+    border-radius: 5px; 
+}
+
+fieldset.title textarea {
+    width: 30%;
+    height: 30px;
+
+    font-size: 1.5em; 
+    text-align: center;
+
+    resize: none;
+}
+
+fieldset.notes textarea {
+    width: 95%;
+    
+}
+
+/* emotions */
+fieldset.emotions div {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+fieldset.emotions input {
+    display: none;
+}
+
+fieldset.emotions img {
+    cursor: pointer;
+
+    border-radius: 100px;
+    padding: 5px;
+
+    filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.5));
+
+    transition: all 0.2s ease;
+}
+
+fieldset.emotions input[type="radio"]:checked + img {
+    filter: drop-shadow(3px 4px 2px rgba(0, 0, 0, 0.7));
+    transform: scale(1.2); 
+    /* border: 3px #130F30 solid; */
+}
+
+/* energy */
+fieldset.energy > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px; 
+}
+
+.energy-box {
+    display: block;
+    
+    width: 130px;
+    height: 40px;
+
+    cursor: pointer;
+
+    background-color: #f2f2f2;
+
+    transition: transform 0.2s ease-in-out;
+    
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+fieldset.energy > div input[type="radio"]:checked + span {
+    transform: scale(1.1);
+    /* box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3); */
+    border: 3px #130F30 solid;
+}
+
+#energy-Drained-bar {
+    background-color: #476CED;
+
+    border-radius: 50px 0px 0px 50px;
+}
+#energy-Tired-bar {
+    background-color: #90A5ED;
+}   
+#energy-Fine-bar {
+    background-color: #EBEBEB;
+}
+#energy-Awake-bar {
+    background-color: #EAEBCF;
+}   
+#energy-Lively-bar {
+    background-color: #F1F29D;
+
+    border-radius: 0px 50px 50px 0px;
+}
+
+/* activities and socials */
+.socact-category {
+    padding: 0px 8%;
+}
+
+.socact-category > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 20px;
+    margin: 10px auto;
+
+    background-color: #EFECFF;
+
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.4);
+}
+
+.socact-category span {
+    display: block;
+    padding: 10px;
+    margin: 10px;
+
+    cursor: pointer;
+
+    background-color: #ffffff;
+
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+
+    transition: all 0.2s ease;
+}
+
+.socact-category span:hover {
+    background-color: #cccccc;
+    transition: all 0.2s ease;
+}
+
+
+.socact-category input[type="checkbox"] {
+    display: none;
+}
+
+
+.socact-category input[type="checkbox"]:checked + span {
+    background-color: #130F30;
+    color: #ffffff;
+}
+
+#category-Indoor {
+    background-color: #A8DAD6;
+}
+#category-Outdoor {
+    background-color: #FFD6A5;
+}
+#category-Entertainment {
+    background-color: #FAE1DD;
+}
+#category-Tasks {
+    background-color: #f3f6cb;
+}
+#category-Fun {
+    background-color: #c18bbd;
+}
+#category-Physical {
+    background-color: #8d8cc5;
+}
+
+/* submit button */
+.entry-form button {
+    background-color: #9F8BFF;
+
+    display: block;
+    padding: 10px 20px;
+    margin: 20px auto 0px;
+    width: 20%; 
+
+    color: white;
+    font-size: 1.2em;
+    text-decoration: underline;
+
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;  
+}
+
+.entry-form button:hover {
+    background-color: #866eff;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
 
 /* ///////////////////////// moodMeter ///////////////////////// */
 
