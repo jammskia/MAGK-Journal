@@ -10,7 +10,13 @@ const router = Router();
 router.route('/')
     .get(async (req, res) => {
         try {
-            const entryList = await entryData.getAllEntries();
+            //// Testing Only /////
+            let allUsers = await userData.getAllUsers();
+            let userId = allUsers[0]._id.toString()
+            //// Testing Only /////
+
+            const entryList = await entryData.getUserEntries(userId);
+
             entryList.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
             });
@@ -28,9 +34,10 @@ router.route('/')
                 }
             }
 
-            return res.render("entries/entriesAll", { 
+            return res.render("entries/entriesAll", {
+                showNav: true,
                 pageTitle: "Entries",
-                entries: entryList 
+                entries: entryList
             });
 
         } catch (e) {
@@ -86,7 +93,7 @@ router.route('/')
                 validation.checkId(socials[i], "socialId");
             }
             validation.checkString(notes, "notes", 0);
-            
+
             const newEntry = await entryData.createEntry(
                 userId,
                 new Date(),
@@ -162,7 +169,7 @@ router.route('/:id')
             for (let i = 0; i < singleEntry.socials.length; i++) {
                 socials.push(await socialData.getSocialById(singleEntry.socials[i]));
             }
-            return res.render('entries/entriesSingle', { 
+            return res.render('entries/entriesSingle', {
                 pageTitle: "Entry",
                 entry: singleEntry,
                 emotion,
