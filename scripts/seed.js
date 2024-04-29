@@ -117,13 +117,15 @@ for (let i = 0; i < 40; i++) {
     const date = new Date(entryDate);
     date.setDate(date.getDate() - 1);
     entryDate = date.toISOString().split('T')[0]
+    let activities = [activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)]];
+    let uniqueActvities = [...new Set(activities)];
     sampleEntries.push({
         userId: newUser1._id.toString(),
         date: entryDate,
         title: "Untitled",
         emotionId: emotionIds[getRandomNumber(0, emotionIds.length - 1)],
         energyId: energyIds[getRandomNumber(0, energyIds.length - 1)],
-        activities: [activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)]],
+        activities: uniqueActvities,
         socials: [socialIds[getRandomNumber(0, socialIds.length - 1)]],
         notes: notes[i]
     });
