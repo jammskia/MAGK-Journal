@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { entryData, activityData, socialData, emotionData, energyData, userData } from '../../data/dataIndex.js';
+
+
 import validation from '../../misc/commonValidations.js';
+import { routeHelpers } from "../commonRoutes.js";
+
 const router = Router();
 
 router.route('/')
@@ -120,7 +124,8 @@ router.route('/new')
                 emotions,
                 energies,
                 activities: categorizedActivities,
-                socials
+                socials,
+                randomizedHeadings: routeHelpers.randomizeHeadings()
             });
         } catch (e) {
             console.log('Error displaying new entry form:', e);
@@ -201,7 +206,8 @@ router.route('/:id/edit')
                 emotions,
                 energies,
                 activities: categorizedActivities,
-                socials
+                socials,
+                randomizedHeadings: routeHelpers.randomizeHeadings()
             });
         } catch (e) {
             console.log('Error displaying entry edit form:', e);

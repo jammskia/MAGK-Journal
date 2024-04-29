@@ -1,17 +1,18 @@
-<h1>Edit Entry from {{formatDate entry.date}}</h1>
-<form action="/entries/{{entry._id}}/edit" method="POST" class="entry-form">
 
+<form action="/entries/{{entry._id}}/edit" method="POST" class="entry-form">
+    <h1>Edit Entry from {{formatDate entry.date}}</h1>
     <fieldset class="title">
         <header>
-            <h2>Title your entry</h2>
+            <h2>{{randomizedHeadings.titleMainHeading}}</h2>
+            <p>{{randomizedHeadings.titleSubHeading}}</p>
         </header>
         <textarea name="title" id="title">{{entry.title}}</textarea>
     </fieldset>
 
     <fieldset class="emotions">
         <header>
-            <h2>How do you feel?</h2>
-            <p>Pick the mood that best fits your day.</p>
+            <h2>{{randomizedHeadings.emotionMainHeading}}</h2>
+            <p>{{randomizedHeadings.emotionSubHeading}}</p>
         </header>
         <div>
             {{#each emotions}}
@@ -33,8 +34,8 @@
 
     <fieldset class="energy">
         <header>
-            <h2>How about energy?</h2>
-            <p>What's your power level at?</p>
+            <h2>{{randomizedHeadings.energyMainHeading}}</h2>
+            <p>{{randomizedHeadings.energySubHeading}}</p>
         </header>
         <div>
             {{#each energies}}
@@ -52,8 +53,8 @@
 
     <fieldset class="socact">
         <header>
-            <h2>What activities did you do?</h2>
-            <p>Choose as many as you did!</p>
+            <h2>{{randomizedHeadings.activityMainHeading}}</h2>
+            <p>{{randomizedHeadings.activitySubHeading}}</p>
         </header>
         <div>
             {{#each activities}}
@@ -75,8 +76,8 @@
 
     <fieldset class="socact">
         <header>
-            <h2>Who shared your day?</h2>
-            <p>If no one, it's alright!</p>
+            <h2>{{randomizedHeadings.socialMainHeading}}</h2>
+            <p>{{randomizedHeadings.socialSubHeading}}</p>
         </header>
         <div class="socact-category">
             <div>
@@ -93,8 +94,8 @@
 
     <fieldset class="notes">
         <header>
-            <h2>Jot down your day's highlights</h2>
-            <p>Think about what you did...</p>
+            <h2>{{randomizedHeadings.notesMainHeading}}</h2>
+            <p>{{randomizedHeadings.notesSubHeading}}</p>
         </header>
         <textarea name="notes" id="notes">{{entry.notes}}</textarea>
     </fieldset>
