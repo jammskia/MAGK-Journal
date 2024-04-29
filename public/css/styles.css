@@ -827,15 +827,19 @@ fieldset.energy > div input[type="radio"]:checked + span {
 
 #topActivities {
     width: 575px;
-    height: 315px;
+    height: 345px;
     background-color: white;
     margin-right: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
+    padding: 0px 100px;
+}
+
+#podiumContainer {
     display: flex;
     align-items: flex-end;
-    padding-left: 100px;
-    padding-right: 100px;
+
+    padding: 20px 0px 10px;
 }
 
 #secondActivity,
@@ -896,9 +900,14 @@ fieldset.energy > div input[type="radio"]:checked + span {
     font-size: 18px;
 }
 
+.analyticDescription.activities {
+    width: 100%;
+    text-align: center;
+}
+
 .analyticItem {
     width: 300px;
-    height: 100px;
+    height: 110px;
     border-radius: 8px;
     background-color: white;
     display: flex;

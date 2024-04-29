@@ -2,6 +2,32 @@
 // titles
 
 export const headings = {
+    userGreetings: [
+        "Make sure to make an entry today!",
+        "Don't forget to reflect on your day!",
+        "What's the highlight of your day so far?",
+        "Hope you're ready to jot down today's experiences!",
+        "Let's capture today's moments together!",
+        "Got something to share? Your journal awaits!",
+        "Remember to log your day!",
+        "It's a great day to document your journey!",
+        "How was your day? Let's hear it!",
+        "Time to unwind and scribble down your thoughts!"
+    ],
+
+    greetingPrefixes: [
+        "Hi",
+        "Hey",
+        "Hello",
+        "Greetings",
+        "Welcome",
+        "Good to see you",
+        "Howdy",
+        "Hi there",
+        "Hey there",
+        "Hello there"
+    ],
+
     titleMainHeadings: [
         "Today's Headliner:",
         "Name This Entry",
@@ -93,6 +119,8 @@ export const routeHelpers = {
 
     randomizeHeadings() {
         return {
+            userGreetings: this.getRandomHeading(headings.userGreetings),
+            greetingPrefixes: this.getRandomHeading(headings.greetingPrefixes),
             titleMainHeading: this.getRandomHeading(headings.titleMainHeadings),
             titleSubHeading: this.getRandomHeading(headings.titleSubHeadings),
             emotionMainHeading: this.getRandomHeading(headings.emotionMainHeadings),

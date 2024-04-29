@@ -1,7 +1,7 @@
 <section id="moodMeterSection">
     <div class="greetingWrapper">
         <div class="greeting">
-            <h1>Hi User,</h1>
+            <h1>{{randomizedHeadings.greetingPrefixes}} User,</h1>
             <p>Here are your analytics...</p>
         </div>
     </div>
@@ -36,27 +36,30 @@
         </div>
         <div id="analytics">
             <div id="topActivities">
-                <div id="secondActivity">
-                    <div class="activityName"></div>
-                    <div class="activityStats">
-                        <div class="activityCount"></div>
-                        <div class="activityRank"></div>
+                <div id="podiumContainer">
+                    <div id="secondActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
+                    </div>
+                    <div id="firstActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
+                    </div>
+                    <div id="thirdActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
                     </div>
                 </div>
-                <div id="firstActivity">
-                    <div class="activityName"></div>
-                    <div class="activityStats">
-                        <div class="activityCount"></div>
-                        <div class="activityRank"></div>
-                    </div>
-                </div>
-                <div id="thirdActivity">
-                    <div class="activityName"></div>
-                    <div class="activityStats">
-                        <div class="activityCount"></div>
-                        <div class="activityRank"></div>
-                    </div>
-                </div>
+                <div class="analyticDescription activities">Commonly Done Activities</div>
             </div>
             <div id="analyticStack">
                 <div id="averageEmotion" class="analyticItem">

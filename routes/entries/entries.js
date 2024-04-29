@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { entryData, activityData, socialData, emotionData, energyData, userData } from '../../data/dataIndex.js';
 
-
 import validation from '../../misc/commonValidations.js';
 import { routeHelpers } from "../commonRoutes.js";
 
@@ -37,7 +36,8 @@ router.route('/')
             return res.render("entries/entriesAll", {
                 showNav: true,
                 pageTitle: "Entries",
-                entries: entryList
+                entries: entryList,
+                randomizedHeadings: routeHelpers.randomizeHeadings()
             });
 
         } catch (e) {
