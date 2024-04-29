@@ -128,6 +128,7 @@ router.route('/new')
 
             res.render('entries/entriesNew', {
                 pageTitle: 'Create New Entry',
+                hideEntryButton: true,
                 emotions,
                 energies,
                 activities: categorizedActivities,
