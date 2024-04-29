@@ -8,64 +8,7 @@
 html {
     background-color: #130F30;
 }
-    
-/* 
-    font-family: Arial, Helvetica, sans-serif;
-}
 
-header {
-    width: 100%;
-    background-color: #95ccd5;
-    box-shadow: 0px 2px 10px rgba(1, 1, 1, 0.2);
-    z-index: 100;
-}
-
-.ui-datepicker-trigger {
-    padding-left: 10px;
-    cursor: pointer;
-}
-    
-.navbar {
-    height: 70px;
-    background-color: black;
-    padding-top: 0px;
-    justify-content: left;
-}
-      
-.navbar-logo {
-    height: 70px;
-    padding: 0px;
-    margin-top: 0px;
-}
-    
-.canvasLink {
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none;
-}
-    
-.offcanvas {
-    background-color: black;
-}
-    
-.navbar-brand {
-    color: white;
-    align-items: center;
-    margin-top: 0px;
-    padding: 0px;
-    font-weight: bold;
-    font-size: 25px;
-}
-    
-.navbar-brand:hover {
-    color: #fff;
-}
-    
-nav li {
-    padding: 10px 15px;
-} */
-    
 body {
     display: flex;
     min-height: 100vh;

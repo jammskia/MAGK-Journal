@@ -1,6 +1,4 @@
-import { activities, socials, emotions, energies } from '../config/mongoCollections.js';
 import { activityData, socialData, emotionData, energyData } from '../data/dataIndex.js';
-import { dbConnection } from '../config/mongoConnection.js';
 
 const initDefaults = async () => {
     try {
@@ -143,7 +141,8 @@ const initDefaults = async () => {
         await socialData.createSocial("Acquaintances", "/icons/socials/Acquaintances.png");
         await socialData.createSocial("Strangers", "/icons/socials/Strangers.png");
         
-        console.log("Done initializing");
+        console.log("Done initializing.");
+        process.exit();
     } catch (error) {
         console.error("Failed to initialize defaults:", error);
     }

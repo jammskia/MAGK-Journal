@@ -1,4 +1,3 @@
-
 <form action="/entries/{{entry._id}}/edit" method="POST" class="entry-form">
     <h1>Edit Entry from {{formatDate entry.date}}</h1>
     <fieldset class="title">
@@ -17,12 +16,12 @@
         <div>
             {{#each emotions}}
             <label>
+                
                 {{!-- 
-
                 ../ to access a "higher level," meaning out of the each block 
                 when you don't have ../, entry.emotionId is undefined since handlebars can't reach it for some reason
-
                 --}}
+
                 <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required
                     {{equals this._id ../entry.emotionId}}>
                 <img src="{{this.iconPath}}" alt="{{this.name}}">
