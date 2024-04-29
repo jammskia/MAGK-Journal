@@ -4,7 +4,7 @@ import { entries } from '../config/mongoCollections.js';
 import { dbConnection } from '../config/mongoConnection.js';
 
 
-// make sure to either run defaults.js if you're doing it this way, else make your own traits
+// make sure to run defaults.js if you're doing it this way, else make your own traits
 ///////// EMOTIONS
 const annoyed = await emotionData.getEmotionByLabel("Annoyed");
 const unhappy = await emotionData.getEmotionByLabel("Unhappy");
@@ -22,23 +22,251 @@ const lively = await energyData.getEnergyByLabel("Lively");
 const energyIds = [drained._id.toString(), tired._id.toString(), fine._id.toString(), awake._id.toString(), lively._id.toString()];
 
 ///////// ACTIVITIES
-const cooking = await activityData.getActivityByLabel("Cooking");
-const sports = await activityData.getActivityByLabel("Sports");
-const video_games = await activityData.getActivityByLabel("Video Games");
-const chores = await activityData.getActivityByLabel("Chores");
-const cleaning = await activityData.getActivityByLabel("Cleaning");
-const shopping = await activityData.getActivityByLabel("Shopping");
-const exercising = await activityData.getActivityByLabel("Exercising");
-const homework = await activityData.getActivityByLabel("Homework");
-const reading = await activityData.getActivityByLabel("Reading");
-const painting_drawing = await activityData.getActivityByLabel("Painting/Drawing");
-const swimming = await activityData.getActivityByLabel("Swimming");
-const activityIds = [cooking._id.toString(), sports._id.toString(), video_games._id.toString(), chores._id.toString(), cleaning._id.toString(), shopping._id.toString(), exercising._id.toString(), homework._id.toString(), reading._id.toString(), painting_drawing._id.toString(), swimming._id.toString()];
+// Hobbies
+const artsAndCrafts = await activityData.getActivityByLabel("Arts & Crafts");
+const baking = await activityData.getActivityByLabel("Baking");
+const drawing = await activityData.getActivityByLabel("Drawing");
+const filmMaking = await activityData.getActivityByLabel("Film-making");
+const gardening = await activityData.getActivityByLabel("Gardening");
+const knitting = await activityData.getActivityByLabel("Knitting");
+const painting = await activityData.getActivityByLabel("Painting");
+const photography = await activityData.getActivityByLabel("Photography");
+const playingMusic = await activityData.getActivityByLabel("Playing Music");
+const programming = await activityData.getActivityByLabel("Programming");
+const webDesign = await activityData.getActivityByLabel("Web Design");
+const writing = await activityData.getActivityByLabel("Writing");
+
+// Entertainment
+const boardGames = await activityData.getActivityByLabel("Board Games");
+const cardGames = await activityData.getActivityByLabel("Card Games");
+const dancing = await activityData.getActivityByLabel("Dancing");
+const listeningToMusic = await activityData.getActivityByLabel("Listening to Music");
+const movies = await activityData.getActivityByLabel("Movies");
+const readingEntertainment = await activityData.getActivityByLabel("Reading");
+const shoppingEntertainment = await activityData.getActivityByLabel("Shopping");
+const singing = await activityData.getActivityByLabel("Singing");
+const tvShows = await activityData.getActivityByLabel("TV/Shows");
+const toys = await activityData.getActivityByLabel("Toys");
+const videoGamesEntertainment = await activityData.getActivityByLabel("Video Games");
+
+// Physical
+const danceAndAerobics = await activityData.getActivityByLabel("Dance & Aerobics");
+const drivingSports = await activityData.getActivityByLabel("Driving Sports");
+const exercisingPhysical = await activityData.getActivityByLabel("Exercising");
+const gym = await activityData.getActivityByLabel("Gym");
+const martialArts = await activityData.getActivityByLabel("Martial Arts");
+const teamSports = await activityData.getActivityByLabel("Team Sports");
+const trackAndField = await activityData.getActivityByLabel("Track & Field");
+const waterSports = await activityData.getActivityByLabel("Water Sports");
+
+// Outdoor
+const animals = await activityData.getActivityByLabel("Animals");
+const astronomy = await activityData.getActivityByLabel("Astronomy");
+const camping = await activityData.getActivityByLabel("Camping");
+const extremeSports = await activityData.getActivityByLabel("Extreme Sports");
+const farming = await activityData.getActivityByLabel("Farming");
+const fishing = await activityData.getActivityByLabel("Fishing");
+const hiking = await activityData.getActivityByLabel("Hiking");
+const hunting = await activityData.getActivityByLabel("Hunting");
+const picnicking = await activityData.getActivityByLabel("Picnicking");
+const walkingOutdoor = await activityData.getActivityByLabel("Walking");
+const waterExploration = await activityData.getActivityByLabel("Water Exploration");
+
+// Educational
+const classEducational = await activityData.getActivityByLabel("Class");
+const clubs = await activityData.getActivityByLabel("Clubs");
+const homework= await activityData.getActivityByLabel("Homework");
+const lecture = await activityData.getActivityByLabel("Lecture");
+const onlineCourses = await activityData.getActivityByLabel("Online Courses");
+const projects = await activityData.getActivityByLabel("Projects");
+const workshops = await activityData.getActivityByLabel("Workshops");
+
+// Work
+const businessTrip = await activityData.getActivityByLabel("Business Trip");
+const meeting = await activityData.getActivityByLabel("Meeting");
+const training = await activityData.getActivityByLabel("Training");
+
+// Errands/Chores
+const banking = await activityData.getActivityByLabel("Banking");
+const cleaningChores = await activityData.getActivityByLabel("Cleaning");
+const cookingChores = await activityData.getActivityByLabel("Cooking");
+const groceries = await activityData.getActivityByLabel("Groceries");
+const homeRepairs = await activityData.getActivityByLabel("Home Repairs");
+const laundry = await activityData.getActivityByLabel("Laundry");
+const organization = await activityData.getActivityByLabel("Organization");
+const vehicleMaintenance = await activityData.getActivityByLabel("Vehicle Maintenance");
+
+// Community
+const charityWork = await activityData.getActivityByLabel("Charity Work");
+const localEvents = await activityData.getActivityByLabel("Local Events");
+const publicSpeaking = await activityData.getActivityByLabel("Public Speaking");
+const religiousActivities = await activityData.getActivityByLabel("Religious Activities");
+const volunteering = await activityData.getActivityByLabel("Volunteering");
+
+// Travel
+const airplaneRide = await activityData.getActivityByLabel("Airplane Ride");
+const cityTours = await activityData.getActivityByLabel("City Tours");
+const cruiseTrip = await activityData.getActivityByLabel("Cruise Trip");
+const roadTrips = await activityData.getActivityByLabel("Road Trips");
+const sightseeing = await activityData.getActivityByLabel("Sightseeing");
+const vacation = await activityData.getActivityByLabel("Vacation");
+
+// Events
+const ceremony = await activityData.getActivityByLabel("Ceremony");
+const concert = await activityData.getActivityByLabel("Concert");
+const dating = await activityData.getActivityByLabel("Dating");
+const festivals = await activityData.getActivityByLabel("Festivals");
+const party = await activityData.getActivityByLabel("Party");
+const sportsEvents = await activityData.getActivityByLabel("Sports");
+const wedding = await activityData.getActivityByLabel("Wedding");
+
+// Health/Wellness
+const haircut = await activityData.getActivityByLabel("Haircut");
+const meditation = await activityData.getActivityByLabel("Meditation");
+const massage = await activityData.getActivityByLabel("Massage");
+const makeover = await activityData.getActivityByLabel("Makeover");
+const resting = await activityData.getActivityByLabel("Resting");
+const spaDay = await activityData.getActivityByLabel("Spa Day");
+
+
+const activityIds = [
+    // Hobbies
+    artsAndCrafts._id.toString(),
+    baking._id.toString(),
+    drawing._id.toString(),
+    filmMaking._id.toString(),
+    gardening._id.toString(),
+    knitting._id.toString(),
+    painting._id.toString(),
+    photography._id.toString(),
+    playingMusic._id.toString(),
+    programming._id.toString(),
+    webDesign._id.toString(),
+    writing._id.toString(),
+
+    // Entertainment
+    boardGames._id.toString(),
+    cardGames._id.toString(),
+    dancing._id.toString(),
+    listeningToMusic._id.toString(),
+    movies._id.toString(),
+    readingEntertainment._id.toString(),
+    shoppingEntertainment._id.toString(),
+    singing._id.toString(),
+    tvShows._id.toString(),
+    toys._id.toString(),
+    videoGamesEntertainment._id.toString(),
+
+    // Physical
+    danceAndAerobics._id.toString(),
+    drivingSports._id.toString(),
+    exercisingPhysical._id.toString(),
+    gym._id.toString(),
+    martialArts._id.toString(),
+    teamSports._id.toString(),
+    trackAndField._id.toString(),
+    waterSports._id.toString(),
+
+    // Outdoor
+    animals._id.toString(),
+    astronomy._id.toString(),
+    camping._id.toString(),
+    extremeSports._id.toString(),
+    farming._id.toString(),
+    fishing._id.toString(),
+    hiking._id.toString(),
+    hunting._id.toString(),
+    picnicking._id.toString(),
+    walkingOutdoor._id.toString(),
+    waterExploration._id.toString(),
+
+    // Educational
+    classEducational._id.toString(),
+    clubs._id.toString(),
+    homework._id.toString(),
+    lecture._id.toString(),
+    onlineCourses._id.toString(),
+    projects._id.toString(),
+    workshops._id.toString(),
+
+    // Work
+    businessTrip._id.toString(),
+    meeting._id.toString(),
+    training._id.toString(),
+
+    // Errands/Chores
+    banking._id.toString(),
+    cleaningChores._id.toString(),
+    cookingChores._id.toString(),
+    groceries._id.toString(),
+    homeRepairs._id.toString(),
+    laundry._id.toString(),
+    organization._id.toString(),
+    vehicleMaintenance._id.toString(),
+
+    // Community
+    charityWork._id.toString(),
+    localEvents._id.toString(),
+    publicSpeaking._id.toString(),
+    religiousActivities._id.toString(),
+    volunteering._id.toString(),
+
+    // Travel
+    airplaneRide._id.toString(),
+    cityTours._id.toString(),
+    cruiseTrip._id.toString(),
+    roadTrips._id.toString(),
+    sightseeing._id.toString(),
+    vacation._id.toString(),
+
+    // Events
+    ceremony._id.toString(),
+    concert._id.toString(),
+    dating._id.toString(),
+    festivals._id.toString(),
+    party._id.toString(),
+    sportsEvents._id.toString(),
+    wedding._id.toString(),
+
+    // Health/Wellness
+    haircut._id.toString(),
+    meditation._id.toString(),
+    massage._id.toString(),
+    makeover._id.toString(),
+    resting._id.toString(),
+    spaDay._id.toString()
+];
+
+
 
 ///////// SOCIALS
+const classmates = await socialData.getSocialByLabel("Classmates");
+const coworkers = await socialData.getSocialByLabel("Coworkers");
+const closeFamily = await socialData.getSocialByLabel("Close Family");
+const extendedFamily = await socialData.getSocialByLabel("Extended Family");
+const children = await socialData.getSocialByLabel("Children");
+const partner = await socialData.getSocialByLabel("Partner");
+const significantOther = await socialData.getSocialByLabel("Significant Other");
 const friends = await socialData.getSocialByLabel("Friends");
-const family = await socialData.getSocialByLabel("Family");
-const socialIds = [friends._id.toString(), family._id.toString()];
+const bestFriends = await socialData.getSocialByLabel("Best Friends");
+const pets = await socialData.getSocialByLabel("Pets");
+const acquaintances = await socialData.getSocialByLabel("Acquaintances");
+const strangers = await socialData.getSocialByLabel("Strangers");
+
+const socialIds = [
+    classmates._id.toString(),
+    coworkers._id.toString(),
+    closeFamily._id.toString(),
+    extendedFamily._id.toString(),
+    children._id.toString(),
+    partner._id.toString(),
+    significantOther._id.toString(),
+    friends._id.toString(),
+    bestFriends._id.toString(),
+    pets._id.toString(),
+    acquaintances._id.toString(),
+    strangers._id.toString()
+];
 
 
 // Test Users
@@ -108,7 +336,6 @@ const notes = [
     "Today was a day of growth. I pushed myself to try something new and discovered a new passion. It was a reminder of the importance of stepping out of my comfort zone.",
 ];
 
-
 ///////// ENTRIES
 const sampleEntries = [];
 let entryDate = new Date().toISOString().split('T')[0];
@@ -130,22 +357,6 @@ for (let i = 0; i < 40; i++) {
         notes: notes[i]
     });
 }
-
-// to test out the date functions:
-// const sampleDateEntries = [
-//     { 
-//         _id: new ObjectId(), 
-//         userId: sampleUsers[0]._id.toString(), 
-//         date: new Date('2024-01-01T12:00:00Z'), 
-//         notes: "Happy New Year" 
-//     },
-//     { 
-//         _id: new ObjectId(), 
-//         userId: sampleUsers[0]._id.toString(), 
-//         date: new Date('2024-02-14T12:00:00Z'), 
-//         notes: "Valentine's Day" 
-//     },
-// ];
 
 const seedEntries = async () => {
     const createdEntries = [];
@@ -184,14 +395,6 @@ const seedEntries = async () => {
             //// test out the dates
             console.log("Got entry by date:")
             console.log(await entryData.getEntryByDate(newUser1._id.toString(), "2024-04-16"));
-
-            // month function:
-            // const entryCollection = await entries();
-            // await entryCollection.insertMany(sampleDateEntries);
-            // console.log("Fake entries inserted");
-
-            // const februaryEntries = await entryData.getEntriesByMonth(sampleUsers[0]._id.toString(), '2024', 'February');
-            // console.log("February entries:", februaryEntries);
         }
 
         console.log("Entries seeded successfully");

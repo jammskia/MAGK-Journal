@@ -715,23 +715,38 @@ fieldset.energy > div input[type="radio"]:checked + span {
     color: #ffffff;
 }
 
-#category-Indoor {
+#category-Hobbies {
     background-color: #A8DAD6;
 }
-#category-Outdoor {
+#category-Entertainment {
     background-color: #FFD6A5;
 }
-#category-Entertainment {
+#category-Physical {
     background-color: #FAE1DD;
 }
-#category-Tasks {
+#category-Outdoor {
     background-color: #f3f6cb;
 }
-#category-Fun {
+#category-Travel {
     background-color: #c18bbd;
 }
-#category-Physical {
+#category-Educational {
     background-color: #8d8cc5;
+}
+#category-Work {
+    background-color: #f8a185;
+}
+#category-Tasks {
+    background-color: #f3f5e7;
+}
+#category-Community {
+    background-color: #d4e5a1;
+}
+#category-Events {
+    background-color: #abc3e5;
+}
+#category-Wellness {
+    background-color: #cec0a3;
 }
 
 /* submit button */
