@@ -642,6 +642,13 @@ fieldset.emotions input[type="radio"]:checked + img + p, fieldset.energy > div i
     font-weight: bold;
 }
 
+/* errors */
+
+.error {
+    color: red;
+    padding-top: 5px;
+}
+
 /* title + notes */
 fieldset.title {
     display: flex;
@@ -1122,3 +1129,5 @@ fieldset.energy > div input[type="radio"]:checked + span {
 .analyticDescription {
     font-size: 18px;
 }
+
+
