@@ -47,6 +47,20 @@ app.engine('handlebars', exphbs.engine({
             return '';
         },
 
+        // determine if a category should start visible in edit page
+        isVisible: (items, entryItems) => {
+            for (let i = 0; i < items.length; i++) {
+                let itemId = items[i]._id.toString();
+                for (let j = 0; j < entryItems.length; j++) {
+                    if (itemId === entryItems[j]) {
+                        return 'visible';
+                    }
+                }
+            }
+            return 'hidden';
+        },
+        
+                
         // for the singlepage energy bar
         // calculates up to what level the bar should be filled depened on the energy value
         energyLevel: (value, index) => {
@@ -55,7 +69,7 @@ app.engine('handlebars', exphbs.engine({
             }
             return '';
         },
-        
+
         // for testing, 
         // ex: {{log entry.notes}} in handlebars for example
         log: (value) => {

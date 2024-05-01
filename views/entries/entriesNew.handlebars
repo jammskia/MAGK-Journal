@@ -50,8 +50,11 @@
         <div>
             {{#each activities}}
             <div class="socact-category">
-                <h3>{{@key}}</h3>
-                <div id="category-{{@key}}">
+                <div class="socact-label">
+                    <h3>{{@key}}</h3>
+                    <button type="button" class="toggle-button" data-target="category-{{@key}}">Show</button>
+                </div>
+                <div id="category-{{@key}}" class="socact-content hidden">
                     {{#each this}}
                     <label>
                         <input type="checkbox" name="activities[]" value="{{this._id}}">
@@ -70,7 +73,7 @@
             <p>{{randomizedHeadings.socialSubHeading}}</p>
         </header>
         <div class="socact-category">
-            <div>
+            <div class="socact-content">
             {{#each socials}}
                 <label>
                     <input type="checkbox" name="socials" value="{{this._id}}">
@@ -89,5 +92,7 @@
         <textarea name="notes" id="notes"></textarea>
     </fieldset>
 
-    <button type="submit">Submit Entry</button>
+    <button type="submit" class="submit-button">Submit Entry</button>
 </form>
+
+<script src="../../public/js/entries.js"></script>

@@ -119,7 +119,14 @@ nav ul li a {
 
     text-decoration: none;
     color: #ffffff;
+    
+    transition: all 0.3s ease;
 }
+
+#create-entry a:hover {
+    background-color: #866eff;;
+}
+
 
 /* /////////////// Add Entry Hover Button /////////////// */
 
@@ -243,6 +250,12 @@ nav ul li a {
     color: #130F30;
 
     border-radius: 8px;
+
+    transition: all 0.3s ease;
+}
+
+.entry-card a:hover {
+    background-color: #c2c2c2;
 }
 
 /* colour-coded by emotion */
@@ -472,13 +485,75 @@ nav ul li a {
     background-color: #65aff3;
 }
 
-#entry-buttons button {
+#delete-button {
     background-color: #F68181;
 }
 
-#entry-buttons button:hover {
+#delete-button:hover {
     background-color: #f5a1a1;
 }
+
+/* delete confirmation */
+.popup {
+    display: none;
+    position: fixed; 
+    z-index: 100;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%; 
+
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.popup-content {
+    background-color: #ffffff;
+
+    margin: 15% auto; 
+    padding: 20px;
+
+    width: 20%;
+
+    border-radius: 12px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
+
+}
+
+.popup-content > div {
+    display: flex;
+    justify-content: center;
+}
+
+.popup-content button {
+    margin: 20px 10px;
+    padding: 10px;
+    
+    border-radius: 8px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+
+    transition: background-color 0.3s ease;
+}
+
+#confirm-delete {
+    background-color: #F68181;
+
+}
+#confirm-delete:hover {
+    background-color: #f5a1a1;
+}
+
+#cancel-delete {
+    background-color: #cccccc; /* Gray */
+}
+#cancel-delete:hover {
+    background-color: #bbbbbb;
+}
+
+
 
 /* ################### entriesNew/Edit ################### */
 form {
@@ -547,10 +622,8 @@ fieldset.title textarea {
     width: 30%;
     height: 30px;
 
-    font-size: 1.5em; 
+    font-size: 1.1em; 
     text-align: center;
-
-
 }
 
 fieldset.notes textarea {
@@ -641,7 +714,35 @@ fieldset.energy > div input[type="radio"]:checked + span {
     padding: 0px 8%;
 }
 
-.socact-category > div {
+.socact-label {
+    display: flex;
+}
+
+.toggle-button {
+    padding: 1px 5px;
+    margin: 5px;
+
+    font-size: 14px;
+
+    text-align: center;
+    color: #ffffff;
+
+    background-color: #9F8BFF; 
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: all 0.3 ease;
+      
+}
+
+.toggle-button:hover {
+    background-color: #866eff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.socact-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -653,6 +754,29 @@ fieldset.energy > div input[type="radio"]:checked + span {
 
     border-radius: 12px;
     box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.4);
+}
+
+.socact-content.hidden {
+    max-height: 0px;
+    padding: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+.socact-content.visible {
+    max-height: 500px;
+    padding: 20px;
+    transition: all 0.5s ease;
+}
+
+.socact-content.hidden label {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s ease;
+}
+.socact-content.visible label {
+    opacity: 1;
+    visibility: visible;
+    transition: all 1s ease;
 }
 
 .socact-category span {
@@ -674,7 +798,6 @@ fieldset.energy > div input[type="radio"]:checked + span {
     background-color: #cccccc;
     transition: all 0.2s ease;
 }
-
 
 .socact-category input[type="checkbox"] {
     display: none;
@@ -721,7 +844,7 @@ fieldset.energy > div input[type="radio"]:checked + span {
 }
 
 /* submit button */
-.entry-form button {
+.submit-button {
     background-color: #9F8BFF;
 
     display: block;
@@ -742,7 +865,7 @@ fieldset.energy > div input[type="radio"]:checked + span {
     transition: all 0.3s ease;  
 }
 
-.entry-form button:hover {
+.submit-button:hover {
     background-color: #866eff;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
