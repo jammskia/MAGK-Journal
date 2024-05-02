@@ -1,58 +1,98 @@
-<h1>{{title}}</h1>
-<form action="/entries" method="POST">
+<form action="/entries" method="POST" class="entry-form" id="create-form">
 
-    <fieldset>
-        <h2>Emotions:</h2>
+    <fieldset class="title">
+        <header>
+            <h2>{{randomizedHeadings.titleMainHeading}}</h2>
+            <p>{{randomizedHeadings.titleSubHeading}}</p>
+        </header>
+        <textarea name="title" id="title" aria-labelledby="title"></textarea>
+    </fieldset>
+
+    <fieldset class="emotions">
+        <header>
+            <h2>{{randomizedHeadings.emotionMainHeading}}</h2>
+            <p>{{randomizedHeadings.emotionSubHeading}}</p>
+        </header>
         <div>
             {{#each emotions}}
             <label>
-                <input type="radio" name="emotionId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
+                <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required>
+                <img src="{{this.iconPath}}" alt="{{this.name}}">
+                <p>{{this.name}}</p>
             </label>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Energy:</h2>
+    <fieldset class="energy">
+        <header>
+            <h2>{{randomizedHeadings.energyMainHeading}}</h2>
+            <p>{{randomizedHeadings.energySubHeading}}</p>
+        </header>
         <div>
             {{#each energies}}
-            <label>
-                <input type="radio" name="energyId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
-            </label>
+            <div>
+                <label>
+                    <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required hidden>
+                    <span id="energy-{{this.name}}-bar" class="energy-box"></span>
+                    <p>{{this.name}}</p>
+                </label>
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Activities:</h2>
+    <fieldset class="socact">
+        <header>
+            <h2>{{randomizedHeadings.activityMainHeading}}</h2>
+            <p>{{randomizedHeadings.activitySubHeading}}</p>
+        </header>
         <div>
             {{#each activities}}
-            <label>
-                <input type="checkbox" name="activities" value="{{this._id}}">
-                <span>{{this.name}}</span>
-            </label>
+            <div class="socact-category">
+                <div class="socact-label">
+                    <h3>{{@key}}</h3>
+                    <button type="button" class="toggle-button" data-target="category-{{@key}}">Show</button>
+                </div>
+                <div id="category-{{@key}}" class="socact-content hidden">
+                    {{#each this}}
+                    <label>
+                        <input type="checkbox" name="activities[]" value="{{this._id}}">
+                        <span>{{this.name}}</span>
+                    </label>
+                    {{/each}}
+                </div>   
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Socials:</h2>
-        <div>
+    <fieldset class="socact">
+        <header>
+            <h2>{{randomizedHeadings.socialMainHeading}}</h2>
+            <p>{{randomizedHeadings.socialSubHeading}}</p>
+        </header>
+        <div class="socact-category">
+            <div class="socact-content">
             {{#each socials}}
-            <label>
-                <input type="checkbox" name="socials" value="{{this._id}}">
-                <span>{{this.name}}</span>
-            </label>
+                <label>
+                    <input type="checkbox" name="socials" value="{{this._id}}">
+                    <span>{{this.name}}</span>
+                </label>
             {{/each}}
+            </div>
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Notes:</h2>
-        <textarea name="notes" id="notes"></textarea>
+    <fieldset class="notes">
+        <header>
+            <h2>{{randomizedHeadings.notesMainHeading}}</h2>
+            <p>{{randomizedHeadings.notesSubHeading}}</p>
+        </header>
+        <textarea name="notes" id="notes" aria-labelledby="notes"></textarea>
     </fieldset>
 
-    <button type="submit">Submit Entry</button>
+    <button type="submit" class="submit-button" id="create-submit">Submit Entry</button>
 </form>
+
+<script src="../../public/js/entries.js"></script>

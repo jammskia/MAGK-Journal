@@ -1,58 +1,108 @@
-<h1>{{title}} for {{formatDate entry.date}}</h1>
-<form action="/entries/{{entry._id}}/edit" method="POST">
+<form action="/entries/{{entry._id}}/edit" method="POST" class="entry-form" id="edit-form">
+    <h1>Edit Entry from {{formatDate entry.date}}</h1>
+    <fieldset class="title">
+        <header>
+            <h2>{{randomizedHeadings.titleMainHeading}}</h2>
+            <p>{{randomizedHeadings.titleSubHeading}}</p>
+        </header>
+        <textarea name="title" id="title" aria-labelledby="title">{{entry.title}}</textarea>
+    </fieldset>
 
-    <fieldset>
-        <h2>Emotions:</h2>
+    <fieldset class="emotions">
+        <header>
+            <h2>{{randomizedHeadings.emotionMainHeading}}</h2>
+            <p>{{randomizedHeadings.emotionSubHeading}}</p>
+        </header>
         <div>
             {{#each emotions}}
             <label>
-                <input type="radio" name="emotionId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
+                
+                {{!-- 
+                ../ to access a "higher level," meaning out of the each block 
+                when you don't have ../, entry.emotionId is undefined since handlebars can't reach it for some reason
+                --}}
+
+                <input type="radio" id="emotion-{{this.name}}" name="emotionId" value="{{this._id}}" required
+                    {{equals this._id ../entry.emotionId}}>
+                <img src="{{this.iconPath}}" alt="{{this.name}}">
+                <p>{{this.name}}</p>
             </label>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Energy:</h2>
+    <fieldset class="energy">
+        <header>
+            <h2>{{randomizedHeadings.energyMainHeading}}</h2>
+            <p>{{randomizedHeadings.energySubHeading}}</p>
+        </header>
         <div>
             {{#each energies}}
-            <label>
-                <input type="radio" name="energyId" value="{{this._id}}" required>
-                <span>{{this.name}}</span>
-            </label>
+            <div>
+                <label>
+                    <input type="radio" id="energy-{{this.name}}" name="energyId" value="{{this._id}}" required hidden
+                        {{equals this._id ../entry.energyId}}>
+                    <span id="energy-{{this.name}}-bar" class="energy-box"></span>
+                    <p>{{this.name}}</p>
+                </label>
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Activities:</h2>
+    <fieldset class="socact">
+        <header>
+            <h2>{{randomizedHeadings.activityMainHeading}}</h2>
+            <p>{{randomizedHeadings.activitySubHeading}}</p>
+        </header>
         <div>
             {{#each activities}}
-            <label>
-                <input type="checkbox" name="activities" value="{{this._id}}">
-                <span>{{this.name}}</span>
-            </label>
+            <div class="socact-category">
+                <div class="socact-label">
+                    <h3>{{@key}}</h3>
+                    <button type="button" class="toggle-button" data-target="category-{{@key}}">Show</button>
+                </div>
+                <div id="category-{{@key}}" class="socact-content {{isVisible this ../entry.activities}}">
+                    {{#each this}}
+                    <label>
+                        <input type="checkbox" name="activities[]" value="{{this._id}}"
+                            {{includes ../../entry.activities this._id}}>
+                        <span>{{this.name}}</span>
+                    </label>
+                    {{/each}}
+                </div>   
+            </div>
             {{/each}}
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Socials:</h2>
-        <div>
+    <fieldset class="socact">
+        <header>
+            <h2>{{randomizedHeadings.socialMainHeading}}</h2>
+            <p>{{randomizedHeadings.socialSubHeading}}</p>
+        </header>
+        <div class="socact-category">
+            <div class="socact-content">
             {{#each socials}}
-            <label>
-                <input type="checkbox" name="socials" value="{{this._id}}">
-                <span>{{this.name}}</span>
-            </label>
+                <label>
+                    <input type="checkbox" name="socials" value="{{this._id}}"
+                        {{includes ../entry.socials this._id}}>
+                    <span>{{this.name}}</span>
+                </label>
             {{/each}}
+            </div>
         </div>
     </fieldset>
 
-    <fieldset>
-        <h2>Notes:</h2>
-        <textarea name="notes" id="notes"></textarea>
+    <fieldset class="notes">
+        <header>
+            <h2>{{randomizedHeadings.notesMainHeading}}</h2>
+            <p>{{randomizedHeadings.notesSubHeading}}</p>
+        </header>
+        <textarea name="notes" id="notes" aria-labelledby="notes">{{entry.notes}}</textarea>
     </fieldset>
 
-    <button type="submit">Submit Entry</button>
+    <button type="submit" class="submit-button">Confirm Edit</button>
 </form>
+
+<script src="../../public/js/entries.js"></script>

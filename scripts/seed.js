@@ -1,51 +1,54 @@
-import { ObjectId } from 'mongodb';
 import { entryData, activityData, socialData, emotionData, energyData, userData } from '../data/dataIndex.js';
-import { entries } from '../config/mongoCollections.js';
 import { dbConnection } from '../config/mongoConnection.js';
 
 
-// make sure to either run defaults.js if you're doing it this way, else make your own traits
-///////// EMOTIONS
-const awful = await emotionData.getEmotionByLabel("Awful");
-const bad = await emotionData.getEmotionByLabel("Bad");
-const meh = await emotionData.getEmotionByLabel("Meh");
-const good = await emotionData.getEmotionByLabel("Good");
-const fantastic = await emotionData.getEmotionByLabel("Fantastic");
-const emotionIds = [awful._id.toString(), bad._id.toString(), meh._id.toString(), good._id.toString(), fantastic._id.toString()];
+// make sure to run defaults.js if you're doing it this way, else make your own defaults
 
-///////// ENERGIES
+/*
+to retrieve and instantiate specific default, do something like this:
+
 const drained = await energyData.getEnergyByLabel("Drained");
 const tired = await energyData.getEnergyByLabel("Tired");
-const fine = await energyData.getEnergyByLabel("Fine");
-const awake = await energyData.getEnergyByLabel("Awake");
-const lively = await energyData.getEnergyByLabel("Lively");
-const energyIds = [drained._id.toString(), tired._id.toString(), fine._id.toString(), awake._id.toString(), lively._id.toString()];
+...
+*/
+
+///////// EMOTIONS
+const emotions = await emotionData.getAllEmotions();
+const emotionIds = [];
+
+for (let i = 0; i < emotions.length; i++) {
+    emotionIds.push(emotions[i]._id.toString());
+}
+
+///////// ENERGIES
+const energies = await energyData.getAllEnergies();
+const energyIds = [];
+
+for (let i = 0; i < energies.length; i++) {
+    energyIds.push(energies[i]._id.toString());
+}
 
 ///////// ACTIVITIES
-const cooking = await activityData.getActivityByLabel("Cooking");
-const sports = await activityData.getActivityByLabel("Sports");
-const video_games = await activityData.getActivityByLabel("Video Games");
-const chores = await activityData.getActivityByLabel("Chores");
-const cleaning = await activityData.getActivityByLabel("Cleaning");
-const shopping = await activityData.getActivityByLabel("Shopping");
-const exercising = await activityData.getActivityByLabel("Exercising");
-const homework = await activityData.getActivityByLabel("Homework");
-const reading = await activityData.getActivityByLabel("Reading");
-const painting_drawing = await activityData.getActivityByLabel("Painting/Drawing");
-const swimming = await activityData.getActivityByLabel("Swimming");
-const activityIds = [cooking._id.toString(), sports._id.toString(), video_games._id.toString(), chores._id.toString(), cleaning._id.toString(), shopping._id.toString(), exercising._id.toString(), homework._id.toString(), reading._id.toString(), painting_drawing._id.toString(), swimming._id.toString()];
+const activities = await activityData.getAllActivities();
+const activityIds = [];
+
+for (let i = 0; i < activities.length; i++) {
+    activityIds.push(activities[i]._id.toString());
+}
 
 ///////// SOCIALS
-const friends = await socialData.getSocialByLabel("Friends");
-const family = await socialData.getSocialByLabel("Family");
-const socialIds = [friends._id.toString(), family._id.toString()];
+const socials = await socialData.getAllSocials();
+const socialIds = [];
 
+for (let i = 0; i < socials.length; i++) {
+    socialIds.push(socials[i]._id.toString());
+}
 
+///////// USERS
 // Test Users
 let newUser1 = null;
 let newUser2 = null;
 
-///////// USERS
 const seedUsers = async () => {
     console.log("Initializing users...");
     newUser1 = await userData.createUser("Carly Hopkins", "CHopkins@gmail.com", "Password123", "01/10/2002");
@@ -61,6 +64,9 @@ try {
     console.error("Error while adding users: ", e);
 }
 
+
+
+///////// ENTRIES
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -109,7 +115,6 @@ const notes = [
 ];
 
 
-///////// ENTRIES
 const sampleEntries = [];
 let entryDate = new Date().toISOString().split('T')[0];
 
@@ -117,32 +122,19 @@ for (let i = 0; i < 40; i++) {
     const date = new Date(entryDate);
     date.setDate(date.getDate() - 1);
     entryDate = date.toISOString().split('T')[0]
+    let activities = [activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)]];
+    let uniqueActvities = [...new Set(activities)];
     sampleEntries.push({
         userId: newUser1._id.toString(),
         date: entryDate,
+        title: "Untitled",
         emotionId: emotionIds[getRandomNumber(0, emotionIds.length - 1)],
         energyId: energyIds[getRandomNumber(0, energyIds.length - 1)],
-        activities: [activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)], activityIds[getRandomNumber(0, activityIds.length - 1)]],
+        activities: uniqueActvities,
         socials: [socialIds[getRandomNumber(0, socialIds.length - 1)]],
         notes: notes[i]
     });
 }
-
-// to test out the date functions:
-// const sampleDateEntries = [
-//     { 
-//         _id: new ObjectId(), 
-//         userId: sampleUsers[0]._id.toString(), 
-//         date: new Date('2024-01-01T12:00:00Z'), 
-//         notes: "Happy New Year" 
-//     },
-//     { 
-//         _id: new ObjectId(), 
-//         userId: sampleUsers[0]._id.toString(), 
-//         date: new Date('2024-02-14T12:00:00Z'), 
-//         notes: "Valentine's Day" 
-//     },
-// ];
 
 const seedEntries = async () => {
     const createdEntries = [];
@@ -152,6 +144,7 @@ const seedEntries = async () => {
             const createdEntry = await entryData.createEntry(
                 sampleEntry.userId,
                 sampleEntry.date,
+                sampleEntry.title,
                 sampleEntry.emotionId,
                 sampleEntry.energyId,
                 sampleEntry.activities,
@@ -161,11 +154,11 @@ const seedEntries = async () => {
             createdEntries.push(createdEntry);
         }
 
-        // update the entry
+        // update an entry
         if (createdEntries.length > 0) {
             const updateObject = {
                 notes: "Nevermind",
-                activities: [homework._id.toString()],
+                activities: [activityIds[0]],
                 socials: [],
             };
 
@@ -180,17 +173,8 @@ const seedEntries = async () => {
             //// test out the dates
             console.log("Got entry by date:")
             console.log(await entryData.getEntryByDate(newUser1._id.toString(), "2024-04-16"));
-
-            // month function:
-            // const entryCollection = await entries();
-            // await entryCollection.insertMany(sampleDateEntries);
-            // console.log("Fake entries inserted");
-
-            // const februaryEntries = await entryData.getEntriesByMonth(sampleUsers[0]._id.toString(), '2024', 'February');
-            // console.log("February entries:", februaryEntries);
         }
-
-        console.log("Entries seeded successfully");
+        console.log("Entries seeded successfully.");
 
     } catch (e) {
         console.log("Error seeding entries", e);
@@ -202,6 +186,7 @@ const seedDatabase = async () => {
     try {
         await seedEntries();
         console.log("Database seeded successfully.");
+        process.exit();
     } catch (e) {
         console.error("Error during database seeding:", e);
     }

@@ -8,13 +8,13 @@ const constructorMethod = (app) => {
 
     app.get('/', (req, res) => {
         res.render('home', {
-            title: 'Home'
+            pageTitle: "Home"
         });
     });
 
     app.use('*', (req, res) => {
-        res.redirect('/');
-    })
+        res.redirect('/')
+    });
 }
 
 export default constructorMethod;

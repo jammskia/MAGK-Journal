@@ -1,19 +1,81 @@
-<section id="moodMeter">
-    <h3 class="fw-bold">{{title}}</h3>
-    <div id="moodMeterContainer" style="visibility: hidden;">
-        <div id="datePickerContainer">
-            <div id="dateInput" class="row justify-content-center align-items-center">
-                <div id="dateInputContainer" class="col-lg-5 col-sm-2 input-container">
-                    <input id="startDate" class="form-control form-control-sm" type="text" readonly>
+<section id="moodMeterSection">
+    <div class="greetingWrapper">
+        <div class="greeting">
+            <h1>{{randomizedHeadings.greetingPrefixes}} User,</h1>
+            <p>Here are your analytics...</p>
+        </div>
+    </div>
+    <div id="moodMeterWrapper" style="visibility: hidden;">
+        <div id="moodMeterContainer">
+            <div id="datePickerContainer">
+                <div id="startDateInput" class="dateInputWrapper">
+                    <input id="startDate" aria-labelledby="startDateInput" class="form-control" type="text">
+                    <div class="calendarIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+                            class="bi bi-calendar" viewBox="0 0 16 16">
+                            <path
+                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                        </svg>
+                    </div>
                 </div>
-                <div id="toText" class="col-sm-1 text-center">To</div>
-                <div id="dateInput" class="col-lg-5 col-sm-2 input-container">
-                    <input id="endDate" class="form-control form-control-sm" type="text" readonly>
+                <div id="toText">To</div>
+                <div id="endDateInput" class="dateInputWrapper">
+                    <input id="endDate" aria-labelledby="endDateInput" class="form-control" type="text">
+                    <div class="calendarIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+                            class="bi bi-calendar" viewBox="0 0 16 16">
+                            <path
+                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="chartBox">
             <canvas id="chart"></canvas>
         </div>
+        <div id="analytics">
+            <div id="topActivities">
+                <div id="podiumContainer">
+                    <div id="secondActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
+                    </div>
+                    <div id="firstActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
+                    </div>
+                    <div id="thirdActivity">
+                        <div class="activityName"></div>
+                        <div class="activityStats">
+                            <div class="activityCount"></div>
+                            <div class="activityRank"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="analyticDescription activities">Commonly Done Activities</div>
+            </div>
+            <div id="analyticStack">
+                <div id="averageEmotion" class="analyticItem">
+                    <div class="analyticValue"></div>
+                    <div class="analyticDescription">Average Emotion</div>
+                </div>
+                <div id="averageEnergy" class="analyticItem">
+                    <div class="analyticValue"></div>
+                    <div class="analyticDescription">Average Energy</div>
+                </div>
+                <div id="mostInteractedSocial" class="analyticItem">
+                    <div class="analyticValue"></div>
+                    <div class="analyticDescription">Most Interacted Social</div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </section>

@@ -1,14 +1,18 @@
 import { Router } from 'express';
 import { entryData, userData } from '../../data/dataIndex.js';
+
 import validation from '../../misc/commonValidations.js';
+import { routeHelpers } from "../commonRoutes.js";
+
 const router = Router();
 
 router.route('/')
     .get(async (req, res) => {
         try {
             return res.render("moodMeter/moodMeter", {
-                title: "Mood Meter",
-                jsURLs: ['public/js/mood_meter.js', `https://cdn.jsdelivr.net/npm/chart.js`]
+                pageTitle: "Mood Meter",
+                jsURLs: ['public/js/mood_meter.js', `https://cdn.jsdelivr.net/npm/chart.js`],
+                randomizedHeadings: routeHelpers.randomizeHeadings()
             });
 
         } catch (e) {

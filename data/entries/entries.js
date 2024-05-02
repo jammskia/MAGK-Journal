@@ -1,6 +1,6 @@
 import { entries } from '../../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
-import { emotionData } from '../../data/dataIndex.js';
+import { emotionData, energyData, socialData, activityData } from '../../data/dataIndex.js';
 
 import validation from "../../misc/commonValidations.js";
 import dataHelpers from "../commonData.js";
@@ -10,14 +10,17 @@ const entryDataFunctions = {
     async createEntry(
         userId,
         date,
+        title = "Untitled",
         emotionId,
         energyId,
         activities,
         socials,
-        notes) {
+        notes = "No notes provided...") {
 
         // validations
         userId = validation.checkId(userId, "userId");
+
+        if (title) { title = validation.checkString(title, "title", 0); }
         emotionId = validation.checkId(emotionId, "emotionId");
         energyId = validation.checkId(energyId, "energyId");
 
@@ -56,6 +59,7 @@ const entryDataFunctions = {
         let newEntry = {
             _id: entryId,
             userId,
+            title,
             emotionId,
             energyId,
             activities,
@@ -134,13 +138,43 @@ const entryDataFunctions = {
         return entriesInDateRange.reverse();
     },
 
-    async getDefaultMoodMeterData(userId) {
-        userId = validation.checkId(userId, "userId");
-        const entries = await this.getLastSevenEntries(userId);
+    async cacluateAnalyticData(entries) {
         let moodMeterData = []
+        let socialCounts = {};
+        let maxSocial = null;
+        let maxSocialCount = -1;
+
+        let activityCounts = {};
 
         for (let entry of entries) {
             let emotion = await emotionData.getEmotionById(entry.emotionId);
+            let energy = await energyData.getEnergyById(entry.energyId);
+            // Calculate Most Interacted Social
+            entry.socials.forEach(social => {
+                if (socialCounts[social]) {
+                    socialCounts[social]++;
+                } else {
+                    socialCounts[social] = 1;
+                }
+            });
+            for (let social in socialCounts) {
+                if (socialCounts[social] > maxSocialCount) {
+                    maxSocialCount = socialCounts[social];
+                    maxSocial = social;
+                }
+            }
+
+            // Keep Track of Activites
+            entry.activities.forEach(activity => {
+                if (activityCounts[activity]) {
+                    activityCounts[activity]++;
+                } else {
+                    activityCounts[activity] = 1;
+                }
+            });
+
+
+            // Formate Date
             let formattedDate = entry.date.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
@@ -148,34 +182,64 @@ const entryDataFunctions = {
             });
             let obj = {
                 date: formattedDate,
-                emotion: emotion.value
+                emotion: emotion.value,
+                energy: energy.value,
             };
             moodMeterData.push(obj);
         }
 
-        return moodMeterData;
+        // Calculate top 3 activities
+        let topThreeActivities = Object.keys(activityCounts).sort((a, b) => activityCounts[b] - activityCounts[a]).slice(0, 3);
+        let topThreeActivityObjs = [];
+        for (let i = 0; i < topThreeActivities.length; i++) {
+            let activityId = topThreeActivities[i];
+            let activityObj = await activityData.getActivityById(activityId);
+            let count = activityCounts[activityId]
+            topThreeActivityObjs.push(
+                {
+                    activity: activityObj,
+                    count: count
+                }
+            )
+        }
+
+        let mostSocial = await socialData.getSocialById(maxSocial);
+
+        // Calculates average emotion
+        let emotionValues = moodMeterData.map(entry => entry.emotion);
+        let emotionSum = emotionValues.reduce((acc, val) => acc + val, 0);
+        let averageEmotion = Math.round(emotionSum / emotionValues.length);
+        let emotions = await emotionData.getAllEmotions()
+
+        // Calculates average energy
+        let energyValues = moodMeterData.map(entry => entry.energy);
+        let energySum = energyValues.reduce((acc, val) => acc + val, 0);
+        let averageEnergy = Math.round(energySum / energyValues.length);
+        let energies = await energyData.getAllEnergies()
+
+        let analyticData = {
+            moodMeter: moodMeterData,
+            averageEmotion: emotions[averageEmotion - 1],
+            averageEnergy: energies[averageEnergy - 1],
+            mostSocial: mostSocial,
+            topThreeActivities: topThreeActivityObjs,
+            allEmotionValues: emotions
+        }
+
+        return analyticData;
+    },
+
+    async getDefaultMoodMeterData(userId) {
+        userId = validation.checkId(userId, "userId");
+        const entries = await this.getLastSevenEntries(userId);
+        let analyticData = await this.cacluateAnalyticData(entries)
+        return analyticData;
     },
 
     async getMoodMeterDataForDateRange(userId, startDateStr, endDateStr) {
         userId = validation.checkId(userId, "userId");
-
         const entries = await this.getEntriesByDateRange(userId, startDateStr, endDateStr)
-        let moodMeterData = []
-
-        for (let entry of entries) {
-            let emotion = await emotionData.getEmotionById(entry.emotionId);
-            let formattedDate = entry.date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
-            let obj = {
-                date: formattedDate,
-                emotion: emotion.value
-            };
-            moodMeterData.push(obj);
-        }
-
+        let moodMeterData = await this.cacluateAnalyticData(entries)
         return moodMeterData;
     },
 
@@ -214,6 +278,9 @@ const entryDataFunctions = {
 
         // check fields to update
         let entryUpdate = {};
+        if ('title' in updateObject) {
+            entryUpdate.title = validation.checkString(updateObject.title, "title");
+        }
         if ('emotionId' in updateObject) {
             entryUpdate.emotionId = validation.checkId(updateObject.emotionId, "emotionId");
         }
@@ -248,7 +315,6 @@ const entryDataFunctions = {
             // returns updated entry instead of return info
             { returnDocument: 'after' }
         );
-
         return updatedEntry;
     },
 

@@ -9,22 +9,19 @@ const activityDataFunctions = {
     async createActivity(
         name, 
         iconPath, 
-        tags) {
+        category = "Miscellaneous") {
 
         name = validation.checkString(name, "name");
         iconPath = validation.checkString(iconPath, "iconPath");
     
-        tags = validation.checkArray(tags, "tags");
-        for (let i = 0; i < tags.length; i++) {
-            tags[i] = validation.checkString(tags[i], `Tag: ${tags[i]}`);
-        }
+        category = validation.checkString(category, "category");
     
         const activityId = new ObjectId();
         let newActivity = {
             _id: activityId,
             name,
             iconPath,
-            tags
+            category
         };
 
         return dataHelpers.createItem(activities, newActivity);
@@ -42,6 +39,23 @@ const activityDataFunctions = {
     getActivityByLabel: (label) => {
         label = validation.checkString(label, "Activity name");
         return dataHelpers.getItemByLabel(activities, label);
+    },
+    
+    async getActivitiesByCategory() {
+        const allActivities = await this.getAllActivities();
+        const categorizedActivities = {};
+
+        for (let i = 0; i < allActivities.length; i++) {
+            const activity = allActivities[i];
+            const category = activity.category;
+
+            if (!categorizedActivities[category]) {
+                categorizedActivities[category] = [];
+            }
+
+            categorizedActivities[category].push(activity);
+        }
+        return categorizedActivities;
     }
 }
 
